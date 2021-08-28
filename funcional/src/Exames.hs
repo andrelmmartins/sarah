@@ -21,8 +21,8 @@ exameToString Exame { nome = n, valor = v } = n ++ ": R$ " ++ show v
 
 examesToString :: [Exame] -> String
 examesToString [] = []
-examesToString (e:es) = if not (null es) then do "["++exameToString e ++"]," ++ examesToString es
-    else do "[" ++ exameToString e ++ "]"
+examesToString (e:es) = if not (null es) then do "["++exameToString e ++"]\n" ++ examesToString es
+    else do "[" ++ exameToString e ++ "]\n"
 
 criarExame:: String -> Double -> Exame
 criarExame nome valor = Exame{nome = nome, valor = valor}
@@ -36,7 +36,9 @@ getAllExames ::  IO()
 getAllExames  = do
     handle <- openFile "../db/exames.txt" ReadMode  
     conteudo <- hGetContents handle
-    putStr conteudo
+    let examesString = map T.unpack (T.splitOn (T.pack "\n") (T.pack conteudo))
+    let exames = map formatExameToShow (filter (not . null) examesString)
+    putStr (examesToString exames)
     hClose handle
 
 findExamePeloNome:: String -> IO()
