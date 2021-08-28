@@ -78,11 +78,27 @@ removeExamePeloNome nome = do
     removeFile "../db/exames.txt" 
     renameFile tempName "../db/exames.txt"
 
-editaExamePeloNome:: String -> Double -> IO()
-editaExamePeloNome nome novoValor = do
+editaExamePeloNome:: IO()
+editaExamePeloNome = do
+    putStrLn "Informe o nome do exame a ser editado:"
+    nome <- getLine
+    putStrLn "Informe o novo nome desse exame"
+    novoNome <- getLine
+    putStrLn "Informe o novo valor desse exame"
+    novoValor <- getLine
     removeExamePeloNome nome
-    addExame nome novoValor
+    addExame novoNome (read novoValor)
+    print "Exame editado com sucesso."
 
--- funcao para adicionar exames via menu
+-- funcao para adicionar exames internamente
 addExame:: String -> Double -> IO()
 addExame nome valor = addToTxt(criarExame nome valor)
+
+menuAddExame:: IO()
+menuAddExame = do
+    putStrLn "Informe o nome do exame"
+    nome <- getLine
+    putStrLn "Informe o valor do exame"
+    valor <- getLine
+    addExame nome (read valor)
+    print "Exame adicionado com sucesso."
