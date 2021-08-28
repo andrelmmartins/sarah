@@ -2,7 +2,9 @@ module Exame where
 
 import Text.Read (Read)
 import System.IO
+import System.Directory
 import qualified Data.Text as T
+import qualified Data.List as L
 import Utils
 
 data Exame = Exame{
@@ -46,37 +48,28 @@ findExamePeloNome nome = do
 findExamePeloNomeRec:: String -> [T.Text] -> Int -> String
 findExamePeloNomeRec nome array indice  
   | indice >= length array = "Exame nao encontrado."
-  | toUpperCase nome == toUpperCase (getNomeDoExame exame) = T.unpack(exame)
+  | toUpperCaseAndStrip (trimAllBlankSpaces nome) == toUpperCaseAndStrip (getNomeDoExame exame) = T.unpack exame
   | otherwise = findExamePeloNomeRec nome array (indice+1)
   where
     exame = array !! indice
 
 getNomeDoExame:: T.Text -> String
-getNomeDoExame exame = T.unpack ((T.splitOn (T.pack ", ") (exame)) !! 0)
+getNomeDoExame exame = T.unpack (head (T.splitOn (T.pack ", ") exame))
 
--- funcao apenas para testes sem precisar compilar
+removeExamePeloNome:: String -> IO()
+removeExamePeloNome nome = do
+    handle <- openFile "../db/exames.txt" ReadMode  
+    tempdir <- getTemporaryDirectory  
+    (tempName, tempHandle) <- openTempFile tempdir "temp"  
+    contents <- hGetContents handle
+    let listaComExames = lines contents
+    let examesResultantes = filter (\x -> not (contains x (toUpperCaseAndStrip nome))) (map toUpperCaseAndStrip listaComExames)
+    let examesFormatados = map (T.unpack . T.toTitle . T.pack) examesResultantes
+    hPutStr tempHandle $ unlines examesFormatados  
+    hClose handle  
+    hClose tempHandle  
+    removeFile "../db/exames.txt" 
+    renameFile tempName "../db/exames.txt" 
+
 add:: String -> Double -> IO()
 add nome valor = addExame(criarExame nome valor)
-
--- getExamePeloNome:: String -> [Exame]
--- getExamePeloNome nome = getAllExames 
-
-
--- getNomeDoExame:: Exame -> String
--- getNomeDoExame Exame { nome = n } = n
-
--- getValorDoExame:: Exame -> Double
--- getValorDoExame Exame { valor = p } = p
-
--- getExamePeloNome :: String -> [Exame] -> Maybe Exame
--- getExamePeloNome id [] = Nothing
--- getExamePeloNome id (p:ps) = if id == getNomeDoExame p then Just p
---     else getExamePeloNome id ps
-
--- setValor :: [Exame] -> String -> Double -> [Exame]
--- setValor [] nome novoPreco = []
--- setValor (c:cs) nome novoPreco
---     | nomeAtual == nome = Exame nome novoPreco : cs
---     | otherwise = setValor cs nome novoPreco
---     where
---         nomeAtual = getNomeDoExame c

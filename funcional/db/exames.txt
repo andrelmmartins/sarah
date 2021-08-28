@@ -1,2 +1,2 @@
-exame1, 10.0
-exame2, 20.0
+Exame1, 10.0
+Exame2, 20.0
