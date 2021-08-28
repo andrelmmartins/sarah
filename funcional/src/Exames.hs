@@ -42,16 +42,23 @@ getAllExames  = do
 findExamePeloNome:: String -> IO()
 findExamePeloNome nome = do
   exames <- readFile "../db/exames.txt"
-  let array = T.splitOn (T.pack "\n") (T.pack exames)
-  print (findExamePeloNomeRec nome array 0)
+  let examesList = T.splitOn (T.pack "\n") (T.pack exames)
+  let foundedExam = findExamePeloNomeRec nome examesList 0
+  if (foundedExam /= "Exame nao encontrado.") then print (exameToString(formatExameToShow foundedExam))
+  else print foundedExam
+
+formatExameToShow:: String -> Exame
+formatExameToShow exame = Exame {
+  nome = T.unpack (head (T.splitOn (T.pack ", ") (T.pack exame))), valor = read (T.unpack (T.splitOn (T.pack ", ") (T.pack exame) !! 1))
+  }
 
 findExamePeloNomeRec:: String -> [T.Text] -> Int -> String
-findExamePeloNomeRec nome array indice  
-  | indice >= length array = "Exame nao encontrado."
+findExamePeloNomeRec nome examesList indice  
+  | indice >= length examesList = "Exame nao encontrado."
   | toUpperCaseAndStrip (trimAllBlankSpaces nome) == toUpperCaseAndStrip (getNomeDoExame exame) = T.unpack exame
-  | otherwise = findExamePeloNomeRec nome array (indice+1)
+  | otherwise = findExamePeloNomeRec nome examesList (indice+1)
   where
-    exame = array !! indice
+    exame = examesList !! indice
 
 getNomeDoExame:: T.Text -> String
 getNomeDoExame exame = T.unpack (head (T.splitOn (T.pack ", ") exame))
