@@ -27,8 +27,8 @@ examesToString (e:es) = if not (null es) then do "["++exameToString e ++"]," ++ 
 criarExame:: String -> Double -> Exame
 criarExame nome valor = Exame{nome = nome, valor = valor}
 
-addExame::Exame.Exame -> IO()
-addExame exame = do
+addToTxt::Exame.Exame -> IO()
+addToTxt exame = do
     appendFile "../db/exames.txt" (Exame.nome exame ++ ", " ++ show (Exame.valor exame) ++ "\n")
     return ()
 
@@ -76,7 +76,13 @@ removeExamePeloNome nome = do
     hClose handle  
     hClose tempHandle  
     removeFile "../db/exames.txt" 
-    renameFile tempName "../db/exames.txt" 
+    renameFile tempName "../db/exames.txt"
 
-add:: String -> Double -> IO()
-add nome valor = addExame(criarExame nome valor)
+editaExamePeloNome:: String -> Double -> IO()
+editaExamePeloNome nome novoValor = do
+    removeExamePeloNome nome
+    addExame nome novoValor
+
+-- funcao para adicionar exames via menu
+addExame:: String -> Double -> IO()
+addExame nome valor = addToTxt(criarExame nome valor)

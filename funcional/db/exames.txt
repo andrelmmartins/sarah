@@ -1,2 +1,1 @@
-Exame1, 10.0
-Exame2, 20.0
+Exame de Sangue, 20.0
