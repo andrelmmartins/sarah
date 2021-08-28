@@ -1,2 +1,2 @@
 Hemograma, 50.0
-TGO, 10.0
+Tgp, 45.0

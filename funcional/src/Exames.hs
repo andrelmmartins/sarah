@@ -27,6 +27,10 @@ examesToString (e:es) = if not (null es) then do "["++exameToString e ++"]\n" ++
 criarExame:: String -> Double -> Exame
 criarExame nome valor = Exame{nome = nome, valor = valor}
 
+-- funcao para adicionar exames internamente
+addExame:: String -> Double -> IO()
+addExame nome valor = addToTxt(criarExame nome valor)
+
 addToTxt::Exame.Exame -> IO()
 addToTxt exame = do
     appendFile "../db/exames.txt" (Exame.nome exame ++ ", " ++ show (Exame.valor exame) ++ "\n")
@@ -49,11 +53,6 @@ findExamePeloNome nome = do
   if (foundedExam /= "Exame nao encontrado.") then print (exameToString(formatExameToShow foundedExam))
   else print foundedExam
 
-formatExameToShow:: String -> Exame
-formatExameToShow exame = Exame {
-  nome = T.unpack (head (T.splitOn (T.pack ", ") (T.pack exame))), valor = read (T.unpack (T.splitOn (T.pack ", ") (T.pack exame) !! 1))
-  }
-
 findExamePeloNomeRec:: String -> [T.Text] -> Int -> String
 findExamePeloNomeRec nome examesList indice  
   | indice >= length examesList = "Exame nao encontrado."
@@ -62,11 +61,19 @@ findExamePeloNomeRec nome examesList indice
   where
     exame = examesList !! indice
 
+formatExameToShow:: String -> Exame
+formatExameToShow exame = criarExame (getNomeDoExame exameText) (getValorDoExame exameText)
+  where 
+    exameText = T.pack exame
+
 getNomeDoExame:: T.Text -> String
 getNomeDoExame exame = T.unpack (head (T.splitOn (T.pack ", ") exame))
 
-removeExamePeloNome:: String -> IO()
-removeExamePeloNome nome = do
+getValorDoExame:: T.Text -> Double
+getValorDoExame exame = read (T.unpack (T.splitOn (T.pack ", ") exame !! 1))
+
+removerExamePeloNome:: String -> IO()
+removerExamePeloNome nome = do
     handle <- openFile "../db/exames.txt" ReadMode  
     tempdir <- getTemporaryDirectory  
     (tempName, tempHandle) <- openTempFile tempdir "temp"  
@@ -80,21 +87,17 @@ removeExamePeloNome nome = do
     removeFile "../db/exames.txt" 
     renameFile tempName "../db/exames.txt"
 
-editaExamePeloNome:: IO()
-editaExamePeloNome = do
+editarExamePeloNome:: IO()
+editarExamePeloNome = do
     putStrLn "Informe o nome do exame a ser editado:"
     nome <- getLine
     putStrLn "Informe o novo nome desse exame"
     novoNome <- getLine
     putStrLn "Informe o novo valor desse exame"
     novoValor <- getLine
-    removeExamePeloNome nome
+    removerExamePeloNome nome
     addExame novoNome (read novoValor)
     print "Exame editado com sucesso."
-
--- funcao para adicionar exames internamente
-addExame:: String -> Double -> IO()
-addExame nome valor = addToTxt(criarExame nome valor)
 
 menuAddExame:: IO()
 menuAddExame = do
