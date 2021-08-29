@@ -1,0 +1,2 @@
+Hemograma, 50.0
+Tgp, 45.0
