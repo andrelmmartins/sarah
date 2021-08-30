@@ -11,3 +11,9 @@ contains string parte = isSubsequenceOf parte string
 
 trimAllBlankSpaces:: String -> String 
 trimAllBlankSpaces text = T.unpack (T.strip (T.filter (/= ' ') (T.pack text)))
+
+unSplit :: [String] -> String
+unSplit [] = ""
+unSplit  lista  
+    | L.length lista == 1 = L.head lista
+    | otherwise = L.head lista ++ "," ++ unSplit (L.tail lista)
