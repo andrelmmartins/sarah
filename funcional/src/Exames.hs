@@ -1,11 +1,19 @@
-module Exame where
+module Exames where
 
 import Text.Read (Read)
 import System.IO
+    ( hClose,
+      openFile,
+      hGetContents,
+      hPutStr,
+      openTempFile,
+      IOMode(ReadMode) )
 import System.Directory
+    ( getTemporaryDirectory, removeFile, renameFile )
 import qualified Data.Text as T
 import qualified Data.List as L
-import Utils
+
+import Utils ( toUpperCaseAndStrip, contains, trimAllBlankSpaces )
 
 data Exame = Exame{
     nome :: String,
@@ -31,9 +39,9 @@ criarExame nome valor = Exame{nome = nome, valor = valor}
 addExame:: String -> Double -> IO()
 addExame nome valor = addToTxt(criarExame nome valor)
 
-addToTxt::Exame.Exame -> IO()
+addToTxt::Exames.Exame -> IO()
 addToTxt exame = do
-    appendFile "../db/exames.txt" (Exame.nome exame ++ ", " ++ show (Exame.valor exame) ++ "\n")
+    appendFile "../db/exames.txt" (Exames.nome exame ++ ", " ++ show (Exames.valor exame) ++ "\n")
     return ()
 
 getAllExames ::  IO()
@@ -87,23 +95,37 @@ removerExamePeloNome nome = do
     removeFile "../db/exames.txt" 
     renameFile tempName "../db/exames.txt"
 
-editarExamePeloNome:: IO()
-editarExamePeloNome = do
+--------------------- Menus de Exames -------------------------
+menuBuscaExamePeloNome:: IO()
+menuBuscaExamePeloNome = do
+    putStrLn "Informe o nome do exame que deseja encontrar:"
+    nome <- getLine
+    findExamePeloNome (nome++"\n")
+
+menuEditarExamePeloNome:: IO()
+menuEditarExamePeloNome = do
     putStrLn "Informe o nome do exame a ser editado:"
     nome <- getLine
-    putStrLn "Informe o novo nome desse exame"
+    putStrLn "Informe o novo nome desse exame:"
     novoNome <- getLine
-    putStrLn "Informe o novo valor desse exame"
+    putStrLn "Informe o novo valor desse exame:"
     novoValor <- getLine
     removerExamePeloNome nome
     addExame novoNome (read novoValor)
-    print "Exame editado com sucesso."
+    print "Exame editado com sucesso.\n"
+
+menuRemoverExamePeloNome:: IO()
+menuRemoverExamePeloNome = do
+    putStrLn "Informe o nome do exame a ser removido:"
+    nome <- getLine
+    removerExamePeloNome nome
+    print "Exame removido com sucesso.\n"
 
 menuAddExame:: IO()
 menuAddExame = do
-    putStrLn "Informe o nome do exame"
+    putStrLn "Informe o nome do exame a ser adicionado:"
     nome <- getLine
-    putStrLn "Informe o valor do exame"
+    putStrLn "Informe o valor desse exame:"
     valor <- getLine
     addExame nome (read valor)
-    print "Exame adicionado com sucesso."
+    print "Exame adicionado com sucesso!\n"

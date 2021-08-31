@@ -108,7 +108,7 @@ menuEditarExamePronto = do
 
 menuCadastrarExame :: IO()
 menuCadastrarExame = do
-    putStrLn "\nInforme o Codigo do Exame Pronto a ser editado:"
+    putStrLn "\nInforme o Codigo do Exame Pronto a ser cadastrado:"
     codigoDado <- getLine
 
     examesProntos <- readFile "../db/examesProntos.txt"
@@ -154,7 +154,7 @@ menuVerificarExame = do
     else do
         putStrLn "Informe a Senha do seu Exame (a senha se encontra abaixo do codigo, no mesmo papel):"
         senhaDada <- getLine
-        if (codificaString (senhaDada) == senha (listaBuscandoCodigo !! 0)) then print (">> Perfeito! Nesse link voce pode confetir o resultado do seu exame: " ++ link (listaBuscandoCodigo !! 0))
+        if (codificaString (senhaDada) == senha (listaBuscandoCodigo !! 0)) then print (">> Perfeito! Nesse link voce pode conferir o resultado do seu exame: " ++ link (listaBuscandoCodigo !! 0))
         else print (">> Desculpe, sua senha nao coincide com a senha informada")
 
 ----------------------------Métodos Úteis---------------------------
