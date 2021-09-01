@@ -4,9 +4,9 @@ import GHC.Show (Show)
 import Text.Read (Read)
 import System.IO
 import Data.Char
-import Data.List.Split
+
 import System.Directory
-import Utils ( unSplit )
+import Utils ( unSplit, wordsWhen )
 
 data Medico = Medico{
     crm :: String, 
@@ -36,7 +36,7 @@ removeMedicoPorCrm crmDoMedico = do
     (tempName, tempHandle) <- openTempFile tempdir "temp"  
     contents <- hGetContents handle
     let listaComMedicos = lines contents
-    let listaLista = map (\ x -> splitOn "," x) listaComMedicos
+    let listaLista = map (\ x -> wordsWhen (==',') x) listaComMedicos
     let medicosResultante = filter (filtraMedicosCrm crmDoMedico) listaLista
     let newContents = listaDeListasToLista medicosResultante
     hPutStr tempHandle $ unlines newContents  

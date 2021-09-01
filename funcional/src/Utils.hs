@@ -17,3 +17,9 @@ unSplit [] = ""
 unSplit  lista  
     | L.length lista == 1 = L.head lista
     | otherwise = L.head lista ++ "," ++ unSplit (L.tail lista)
+
+wordsWhen     :: (Char -> Bool) -> String -> [String]
+wordsWhen p s =  case L.dropWhile p s of
+                      "" -> []
+                      s' -> w : wordsWhen p s''
+                            where (w, s'') = L.break p s'
