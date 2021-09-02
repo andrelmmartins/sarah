@@ -5,7 +5,7 @@ import System.IO
 import System.Directory
 import qualified Data.Text as T
 import qualified Data.List as L
-import Util
+import Utils
 
 data Convenios = Convenios{
     cnpj :: String,
@@ -24,7 +24,7 @@ getDesconto Convenios {desconto = desconto} = desconto
 
 listaConvenios :: IO()
 listaConvenios = do
-    handle <- openFile "plp-funcional/Dados.txt" ReadMode
+    handle <- openFile "../db/convenio.txt" ReadMode
     texto <- hGetContents handle
     putStr texto
     hClose handle
@@ -44,7 +44,7 @@ adicionaConvenio cnpj nome desconto = Convenios{cnpj = cnpj, nome = nome, descon
 
 escreverConvenio :: Convenios.Convenios -> IO()
 escreverConvenio convenio = do 
-    appendFile "plp-funcional/Dados.txt" ((Convenios.cnpj convenio) ++ "," ++ Convenios.nome convenio ++ "," ++ show(Convenios.desconto convenio) ++ "\n")
+    appendFile "../db/convenio.txt" ((Convenios.cnpj convenio) ++ "," ++ Convenios.nome convenio ++ "," ++ show(Convenios.desconto convenio) ++ "\n")
     return ()
 
 menuRemover :: IO()
@@ -59,7 +59,7 @@ menuRemover = do
 
 removeConvenio:: String -> IO()
 removeConvenio cnpj = do
-    handle <- openFile "plp-funcional/Dados.txt" ReadMode
+    handle <- openFile "../db/convenio.txt" ReadMode
     tempdir <- getTemporaryDirectory
     (tempName, tempHandle) <- openTempFile tempdir "temp"
     contents <- hGetContents handle
@@ -69,8 +69,8 @@ removeConvenio cnpj = do
     hPutStr tempHandle $ unlines conveniosFormatados
     hClose handle
     hClose tempHandle
-    removeFile "plp-funcional/Dados.txt"
-    renameFile tempName "plp-funcional/Dados.txt"
+    removeFile "../db/convenio.txt"
+    renameFile tempName "../db/convenio.txt"
 
 menuEditar :: IO()
 menuEditar = do
