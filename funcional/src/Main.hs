@@ -35,7 +35,7 @@ menuPrincipalAdmin = do
   putStr "-> "
   selecao <- getLine
   case selecao of
-    -- "1" -> mainMedicos
+    "1" -> mainMedicosAdmin
     "2" -> mainConveniosAdmin
     "3" -> mainExamesAdmin
     "4" -> mainExamesProntosAdmin
@@ -56,7 +56,7 @@ menuPrincipalCliente = do
   putStr "-> "
   selecao <- getLine
   case selecao of
-    -- "1" -> mainMedicos
+    "1" -> mainMedicosCliente
     "2" -> mainConveniosCliente
     "3" -> mainExamesCliente
     "4" -> mainExamesProntosCliente
@@ -289,3 +289,18 @@ mainRemoverMedico:: IO()
 mainRemoverMedico = do
   Medico.menuRemoverMedico
   voltaAoMenuAnterior mainMedicosAdmin msgRetornaAoMenuInicialExamesProntos
+
+---------------------- Menus do módulo de Médicos (Cliente) ------------------------
+mainMedicosCliente:: IO()
+mainMedicosCliente = do
+  putStrLn "Encontre seu medico aqui:\n"
+  putStrLn "1 - Listar Medicos Disponíveis Aceitos"
+  putStrLn "Para voltar ao menu anterior, digite qualquer outro valor\n"
+  opcao <- getLine
+  if opcao == "1" then mainListarMedicosParaCliente
+  else menuPrincipalCliente
+
+mainListarMedicosParaCliente:: IO()
+mainListarMedicosParaCliente = do
+  Medico.listaDeMedicos 
+  voltaAoMenuAnterior mainMedicosCliente msgRetornaAoMenuInicialMedicos 
