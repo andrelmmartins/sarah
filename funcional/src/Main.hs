@@ -3,6 +3,7 @@ module Main where
 import System.IO ()
 import System.Directory ()
 
+import Avaliacao
 import Exames 
 import Medico
 import Convenios
@@ -40,6 +41,7 @@ menuPrincipalAdmin = do
     "3" -> mainExamesAdmin
     "4" -> mainExamesProntosAdmin
     -- "5" -> Agendamentos.main
+    "6" -> mainAvaliacaoAdmin
     _ -> voltaAoMenuPrincipal
 
 
@@ -61,6 +63,7 @@ menuPrincipalCliente = do
     "3" -> mainExamesCliente
     "4" -> mainExamesProntosCliente
     -- "5" -> Agendamentos.main
+    "6" -> mainAvaliacaoCliente
     _ -> voltaAoMenuPrincipal
 
 voltaAoMenuPrincipal:: IO()
@@ -303,4 +306,21 @@ mainMedicosCliente = do
 mainListarMedicosParaCliente:: IO()
 mainListarMedicosParaCliente = do
   Medico.listaDeMedicos 
-  voltaAoMenuAnterior mainMedicosCliente msgRetornaAoMenuInicialMedicos 
+  voltaAoMenuAnterior mainMedicosCliente msgRetornaAoMenuInicialMedicos
+
+---------------------- Menus do módulo de Avaliacao (Admin) ------------------------
+
+mainAvaliacaoAdmin:: IO()
+mainAvaliacaoAdmin = do
+  Avaliacao.listaDeAvaliacoes
+  menuPrincipalAdmin
+
+---------------------- Menus do módulo de Avaliacao (Cliente) ------------------------
+
+mainAvaliacaoCliente:: IO()
+mainAvaliacaoCliente = do
+  putStrLn "Nos ajude a melhorar! Deixe sua avaliacao: "
+  avaliacao <- getLine
+  Avaliacao.escreverAvaliacao avaliacao
+  print "Avaliacao registrada com sucesso. Muito obrigado!"
+  menuPrincipalCliente
