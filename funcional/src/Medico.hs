@@ -59,4 +59,33 @@ listaDeListasToLista :: [[String]] -> [String]
 listaDeListasToLista [] = []
 listaDeListasToLista (x:xs) = (unSplit  x) : listaDeListasToLista xs
 
+----------------------- Menus Internos do Módulo de Médicos -------------------
 
+menuAdicionarMedico:: IO()
+menuAdicionarMedico = do
+    putStrLn "Informe o codigo CRM:"
+    crm <- getLine
+    putStrLn "Informe o nome completo:"
+    nome <- getLine
+    putStrLn "Informe a especialidade"
+    especialidade <- getLine
+    escreverMedico(adcionaMedico crm nome especialidade)
+    print "Medico adicionado com sucesso!\n"
+
+menuEditarMedico:: IO()
+menuEditarMedico = do
+    putStrLn "Informe o codigo CRM do medico a ser editado:"
+    crm <- getLine
+    putStrLn "Informe o nome completo:"
+    nome <- getLine
+    putStrLn "Informe a especialidade:"
+    especialidade <- getLine
+    editaMedicoPorCrm crm nome especialidade
+    print "Medico editado com sucesso!\n"
+
+menuRemoverMedico:: IO()
+menuRemoverMedico = do
+    putStrLn "Informe o codigo CRM do medico a ser removido:"
+    crm <- getLine
+    removeMedicoPorCrm crm
+    print "Medico removido com sucesso"

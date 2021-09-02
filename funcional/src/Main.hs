@@ -4,6 +4,7 @@ import System.IO ()
 import System.Directory ()
 
 import Exames 
+import Medico
 import Convenios
 import ExamePronto
 import Utils
@@ -251,3 +252,40 @@ mainConsultarExameProntoCliente = do
   voltaAoMenuAnterior mainExamesProntosCliente msgRetornaAoMenuInicialExamesProntos
 
 --------------------------------- Menus do módulo de médicos (ADMIN) --------------------------
+mainMedicosAdmin :: IO()
+mainMedicosAdmin = do
+    putStrLn "Ações disponíveis:\n"
+    putStrLn "1 - Cadastrar Medico"
+    putStrLn "2 - Listar Medicos"
+    putStrLn "3 - Buscar Medico por CRM"
+    putStrLn "4 - Editar Medico"
+    putStrLn "5 - Remover Medico"
+    putStrLn "Para voltar ao menu anterior, digite qualquer outro valor"
+    putStr "-> "
+    opcao <- getLine
+    case opcao of 
+        "1" -> mainCadastrarMedico
+        "2" -> mainListarMedicos
+        "3" -> mainEditarMedico
+        "4" -> mainRemoverMedico
+        _ -> menuPrincipalAdmin
+
+mainCadastrarMedico:: IO()
+mainCadastrarMedico = do 
+  Medico.menuAdicionarMedico
+  voltaAoMenuAnterior mainMedicosAdmin msgRetornaAoMenuInicialExamesProntos
+
+mainListarMedicos:: IO()
+mainListarMedicos = do
+  Medico.listaDeMedicos
+  voltaAoMenuAnterior mainMedicosAdmin msgRetornaAoMenuInicialExamesProntos 
+
+mainEditarMedico:: IO()
+mainEditarMedico = do
+  Medico.menuEditarMedico
+  voltaAoMenuAnterior mainMedicosAdmin msgRetornaAoMenuInicialExamesProntos
+ 
+mainRemoverMedico:: IO()
+mainRemoverMedico = do
+  Medico.menuRemoverMedico
+  voltaAoMenuAnterior mainMedicosAdmin msgRetornaAoMenuInicialExamesProntos
