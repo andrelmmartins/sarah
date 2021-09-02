@@ -32,6 +32,7 @@ menuPrincipalAdmin = do
   putStrLn "3. Exames"
   putStrLn "4. Exames Prontos"
   putStrLn "5. Agendamentos"
+  putStrLn "6. Avaliações"
   putStrLn "Para voltar ao menu principal, digite qualquer outra tecla."
   putStr "-> "
   selecao <- getLine
@@ -260,9 +261,8 @@ mainMedicosAdmin = do
     putStrLn "Ações disponíveis:\n"
     putStrLn "1 - Cadastrar Medico"
     putStrLn "2 - Listar Medicos"
-    putStrLn "3 - Buscar Medico por CRM"
-    putStrLn "4 - Editar Medico"
-    putStrLn "5 - Remover Medico"
+    putStrLn "3 - Editar Medico"
+    putStrLn "4 - Remover Medico"
     putStrLn "Para voltar ao menu anterior, digite qualquer outro valor"
     putStr "-> "
     opcao <- getLine

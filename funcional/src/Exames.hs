@@ -112,14 +112,14 @@ menuEditarExamePeloNome = do
     novoValor <- getLine
     removerExamePeloNome nome
     addExame novoNome (read novoValor)
-    print "Exame editado com sucesso.\n"
+    putStrLn "Exame editado com sucesso."
 
 menuRemoverExamePeloNome:: IO()
 menuRemoverExamePeloNome = do
     putStrLn "Informe o nome do exame a ser removido:"
     nome <- getLine
     removerExamePeloNome nome
-    print "Exame removido com sucesso.\n"
+    putStrLn "Exame removido com sucesso."
 
 menuAddExame:: IO()
 menuAddExame = do
@@ -128,4 +128,4 @@ menuAddExame = do
     putStrLn "Informe o valor desse exame:"
     valor <- getLine
     addExame nome (read valor)
-    print "Exame adicionado com sucesso!\n"
+    putStrLn "Exame adicionado com sucesso!"

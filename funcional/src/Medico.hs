@@ -70,7 +70,7 @@ menuAdicionarMedico = do
     putStrLn "Informe a especialidade"
     especialidade <- getLine
     escreverMedico(adcionaMedico crm nome especialidade)
-    print "Medico adicionado com sucesso!\n"
+    putStrLn "Medico adicionado com sucesso!"
 
 menuEditarMedico:: IO()
 menuEditarMedico = do
@@ -81,11 +81,11 @@ menuEditarMedico = do
     putStrLn "Informe a especialidade:"
     especialidade <- getLine
     editaMedicoPorCrm crm nome especialidade
-    print "Medico editado com sucesso!\n"
+    putStrLn "Medico editado com sucesso!"
 
 menuRemoverMedico:: IO()
 menuRemoverMedico = do
     putStrLn "Informe o codigo CRM do medico a ser removido:"
     crm <- getLine
     removeMedicoPorCrm crm
-    print "Medico removido com sucesso"
+    putStrLn "Medico removido com sucesso"
