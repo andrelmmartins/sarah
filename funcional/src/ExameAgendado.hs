@@ -162,7 +162,7 @@ menuMarcarExame = do
                             let hora = (horarios !! 0)
                             ultimoId <- pegaUltimoID
                             let idExame =  show (ultimoId + 1)
-                            marcarExame idExame crm nomeMedico exame dia hora "Em aberto"
+                            marcarExame idExame crm nomeMedico exame dia hora "Em Aberto"
                             putStrLn ("\nExame marcado com sucesso! > Codigo: " ++ idExame ++ " | " ++ exame ++ " | Medico: " ++ nomeMedico ++ " | " ++ dia ++ " - " ++ hora)
 
 -- Menu Cancelar Exame
