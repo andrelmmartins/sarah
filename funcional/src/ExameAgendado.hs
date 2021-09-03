@@ -195,8 +195,8 @@ menuConcluirExame = do
         putStrLn ("Exame de " ++ nomeExame exame ++ " com o Medico " ++ nomeMedico exame ++ " foi concluido!")
 
 -- Menu Editar Agenda
-menuEditarAgenda :: IO()
-menuEditarAgenda = do
+menuEditarExameAgendado :: IO()
+menuEditarExameAgendado = do
     putStr "Informe o ID do Exame que vai ser editado: "
     idExame <- getLine
     exameEncontrado <- buscarExame idExame
@@ -241,7 +241,7 @@ menuEditarAgenda = do
                                     let hora = (horarios !! horaInt)
                                     putStr "\nQual o novo status desse exame? Concluido ou Em Aberto : "
                                     status <- getLine
-                                    if (not (status `elem` ["Concluido", "Em Aberto"]) then putStrLn ("Esse status nao e aceito")
+                                    if (not (status `elem` ["Concluido", "Em Aberto"])) then putStrLn ("Esse status nao e aceito")
                                     else do
                                         editarExameAgendado idExame crm nomeMedico exame dia hora status
                                         putStrLn ("\nExame editado com sucesso! > Codigo: " ++ idExame ++ " | " ++ exame ++ " | Medico: " ++ nomeMedico ++ " | " ++ dia ++ " - " ++ hora)

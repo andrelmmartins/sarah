@@ -371,13 +371,17 @@ mainAgendaCliente = do
 mainExamesAgendadosAdmin:: IO()
 mainExamesAgendadosAdmin = do
     putStrLn "Ações disponíveis:\n"
-    putStrLn "1. Concluir um Exame"
-    putStrLn "2. Cancelar um Exame"
+    putStrLn "1. Concluir um Exame Agendado"
+    putStrLn "2. Cancelar um Exame Agendado"
+    putStrLn "3. Editar um Exame Agendado"
+    putStrLn "4. Listar Exames Agendados"
     putStrLn "Para voltar ao menu anterior, digite qualquer outro valor"
     selecao <- getLine
     case selecao of
         "1" -> mainConcluirExameAgendado
         "2" -> mainCancelarExameAgendado
+        "3" -> mainEditarExameAgendado
+        "4" -> mainListarExamesAgendados
         _ -> menuPrincipalAdmin
 
 mainConcluirExameAgendado:: IO()
@@ -391,6 +395,35 @@ mainCancelarExameAgendado = do
   putStrLn "==============================================="
   ExameAgendado.menuCancelarExame
   voltaAoMenuAnterior mainExamesAgendadosAdmin msgRetornaAoMenuInicialExameAgendado
+
+mainEditarExameAgendado:: IO()
+mainEditarExameAgendado = do
+  putStrLn "==============================================="
+  ExameAgendado.menuEditarExameAgendado
+  voltaAoMenuAnterior mainExamesAgendadosAdmin msgRetornaAoMenuInicialExameAgendado
+
+mainListarExamesAgendados::IO()
+mainListarExamesAgendados = do
+    putStrLn "Refine melhor sua busca:"
+    putStrLn "1. Listar todos os exames agendados"
+    putStrLn "2. Listar exames agendados que estao em aberto"
+    putStrLn "3. Listar exames concluidos"
+    putStrLn "4. Listar exames agendados por dia"
+    putStrLn "Para voltar ao menu anterior, digite qualquer outro valor"
+    selecao <- getLine
+    case selecao of
+        "1" -> ExameAgendado.listarExames
+        "2" -> ExameAgendado.listarExamesEmAberto 
+        "3" -> ExameAgendado.listarExamesConcluidos 
+        "4" -> mainListarExamesAgendadosPorDia
+        _ -> mainExamesAgendadosAdmin
+    voltaAoMenuAnterior mainExamesAgendadosAdmin msgRetornaAoMenuInicialExameAgendado
+
+mainListarExamesAgendadosPorDia::IO()
+mainListarExamesAgendadosPorDia = do
+  putStrLn "Informe a data de busca [dd/mm/yyyy]"
+  dia <- getLine
+  ExameAgendado.listarExamesDia dia
 
 ---------------- Menu do módulo de Exame Agendado (Cliente) ------------------
 
