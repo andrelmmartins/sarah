@@ -74,6 +74,16 @@ listarExamesConcluidos = do
     putStr (listaToString listaConvertida)
     hClose handle
 
+-- Listar Exames Concluídos
+listarExamesDia :: String -> IO()
+listarExamesDia diaDado = do
+    handle <- openFile "../db/examesAgendados.txt" ReadMode  
+    conteudo <- hGetContents handle
+    let listaQuebrada = T.splitOn (T.pack "\n") (T.pack conteudo)
+    let listaConvertida = [ toExameAgendado (T.unpack exame) | exame <- listaQuebrada, exame /= (T.pack "") && ((T.splitOn (T.pack ", ") (exame)) !! 4) == T.pack diaDado]
+    putStr (listaToString listaConvertida)
+    hClose handle
+
 listaToString :: [ExameAgendado] -> String
 listaToString [] = []
 listaToString (e:es) = if not (null es) then do "[ " ++ toString e ++ " ]\n" ++ listaToString es
@@ -183,6 +193,60 @@ menuConcluirExame = do
         let exame = toExameAgendado exameEncontrado
         concluirExame idExame senha link
         putStrLn ("Exame de " ++ nomeExame exame ++ " com o Medico " ++ nomeMedico exame ++ " foi concluido!")
+
+-- Menu Editar Agenda
+menuEditarAgenda :: IO()
+menuEditarAgenda = do
+    putStr "Informe o ID do Exame que vai ser editado: "
+    idExame <- getLine
+    exameEncontrado <- buscarExame idExame
+    if (exameEncontrado /= " ") then do
+        putStrLn "\nExames:"
+        exames <- getListaExamesNome
+        if(length exames == 0) then putStrLn ("Nao temos exames disponiveis")
+        else do
+            putStrLn (printaListaString exames 0)
+            putStr "> Dentre os exames listados, digite o numero para qual você pretende editar? "
+            exameStr <- getLine
+            let exameInt = (read exameStr) :: Int
+            if(exameInt < 0 || exameInt > ((length exames) - 1)) then putStrLn ("Esse exame nao esta na lista")
+            else do
+                let exame = (exames !! exameInt)
+                putStr "\nQual a nova data que pretende fazer o exame? "
+                dia <- getLine
+                if (not (verificaSeDataOk dia)) then putStrLn ("Essa data nao e valida")
+                else do
+                    medicos <- getListaMedicos
+                    if (length medicos == 0) then putStrLn ("Nao temos medicos disponiveis")
+                    else do
+                        let nomesMedicos = [T.unpack ((T.splitOn (T.pack ",") (T.pack medico))!! 1) | medico <- medicos]
+                        putStrLn ("\n" ++ printaListaString nomesMedicos 0)
+                        putStr "> Dentre os medicos listados, digite o numero do novo medico que voce deseja ser atendido? "
+                        medicoStr <- getLine
+                        let medicoInt = (read medicoStr) :: Int
+                        if(medicoInt < 0 || medicoInt > ((length nomesMedicos) - 1)) then putStrLn ("Esse medico nao esta na lista")
+                        else do
+                            let nomeMedico = (nomesMedicos !! medicoInt)
+                            let crm = T.unpack ((T.splitOn (T.pack ",") (T.pack (medicos !! medicoInt)))!! 0)
+                            horarios <- montaHorariosMedico crm dia
+                            if (length horarios == 0) then putStrLn ("Esse medico esta com a agenda cheia nesse dia")
+                            else do
+                                putStrLn "\nHorarios:"
+                                putStrLn (printaListaString horarios 0)
+                                putStr "> Dentre os horarios listados, digite o numero para qual você pretende agendar? "
+                                horaStr <- getLine
+                                let horaInt = (read horaStr) :: Int
+                                if(horaInt < 0 || horaInt > ((length horarios) - 1)) then putStrLn ("Esse horario nao esta na lista")
+                                else do
+                                    let hora = (horarios !! horaInt)
+                                    putStr "\nQual o novo status desse exame? Concluido ou Em Aberto : "
+                                    status <- getLine
+                                    if (not (status `elem` ["Concluido", "Em Aberto"]) then putStrLn ("Esse status nao e aceito")
+                                    else do
+                                        editarExameAgendado idExame crm nomeMedico exame dia hora status
+                                        putStrLn ("\nExame editado com sucesso! > Codigo: " ++ idExame ++ " | " ++ exame ++ " | Medico: " ++ nomeMedico ++ " | " ++ dia ++ " - " ++ hora)
+
+    else putStrLn "Esse Exame Agendado nao existe"
 
 ------------------------- Metodos Úteis -------------------------
 
