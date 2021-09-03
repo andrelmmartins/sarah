@@ -78,6 +78,12 @@ voltaAoMenuPrincipal = do
   putStrLn "Retornando ao menu inicial."
   main
 
+voltaAoMenuAnterior:: IO() -> String -> IO()
+voltaAoMenuAnterior menu mensagem = do
+  putStrLn "==============================================="
+  putStrLn mensagem
+  menu
+
 
 ------------------- Menus do módulo de Exames (ADMIN) -----------------------------------------
 
@@ -101,26 +107,31 @@ mainExamesAdmin = do
 
 mainListarExames::IO()
 mainListarExames = do
+    putStrLn "==============================================="
     Exames.getAllExames
     voltaAoMenuAnterior mainExamesAdmin msgRetornaAoMenuInicialExames
 
 mainBuscaExamePeloNome:: IO()
 mainBuscaExamePeloNome = do
+    putStrLn "==============================================="
     Exames.menuBuscaExamePeloNome
     voltaAoMenuAnterior mainExamesAdmin msgRetornaAoMenuInicialExames
 
 mainEditarExamePeloNome:: IO()
 mainEditarExamePeloNome = do
+    putStrLn "==============================================="
     Exames.menuEditarExamePeloNome 
     voltaAoMenuAnterior mainExamesAdmin msgRetornaAoMenuInicialExames
 
 mainRemoverExamePeloNome:: IO()
 mainRemoverExamePeloNome = do
+    putStrLn "==============================================="
     Exames.menuRemoverExamePeloNome 
     voltaAoMenuAnterior mainExamesAdmin msgRetornaAoMenuInicialExames
 
 mainAddExame:: IO()
 mainAddExame = do
+    putStrLn "==============================================="
     Exames.menuAddExame 
     voltaAoMenuAnterior mainExamesAdmin msgRetornaAoMenuInicialExames
 
@@ -140,11 +151,13 @@ mainExamesCliente = do
 
 mainListarExamesCliente::IO()
 mainListarExamesCliente = do
+    putStrLn "==============================================="
     Exames.getAllExames
     voltaAoMenuAnterior mainExamesCliente msgRetornaAoMenuInicialExames
 
 mainBuscaExamePeloNomeCliente:: IO()
 mainBuscaExamePeloNomeCliente = do
+    putStrLn "==============================================="
     Exames.menuBuscaExamePeloNome
     voltaAoMenuAnterior mainExamesCliente msgRetornaAoMenuInicialExames
 
@@ -167,21 +180,25 @@ mainConveniosAdmin = do
 
 mainAddConvenios :: IO()
 mainAddConvenios = do
+    putStrLn "==============================================="
     Convenios.menuAdd 
     voltaAoMenuAnterior mainConveniosAdmin msgRetornaAoMenuInicialConvenios
 
 mainRemoverConvenios :: IO()
 mainRemoverConvenios = do
+    putStrLn "==============================================="
     Convenios.menuRemover
     voltaAoMenuAnterior mainConveniosAdmin msgRetornaAoMenuInicialConvenios
 
 mainEditarConvenios :: IO()
 mainEditarConvenios = do
+    putStrLn "==============================================="
     Convenios.menuEditarConvenios
     voltaAoMenuAnterior mainConveniosAdmin msgRetornaAoMenuInicialConvenios
 
 mainListarConvenios:: IO()
 mainListarConvenios = do
+  putStrLn "==============================================="
   listaConvenios
   voltaAoMenuAnterior mainConveniosAdmin msgRetornaAoMenuInicialConvenios
 ---------------------- Menu de Convênios (Cliente) -------------------------------
@@ -211,29 +228,27 @@ mainExamesProntosAdmin = do
 
 mainCadastrarExamePronto::IO()
 mainCadastrarExamePronto = do
+  putStrLn "==============================================="
   ExamePronto.menuCadastrarExame
   voltaAoMenuAnterior mainExamesProntosAdmin msgRetornaAoMenuInicialExamesProntos 
 
 mainEditarExamePronto::IO()
 mainEditarExamePronto = do
+  putStrLn "==============================================="
   ExamePronto.menuEditarExamePronto
   voltaAoMenuAnterior mainExamesProntosAdmin msgRetornaAoMenuInicialExamesProntos 
 
 mainRemoveExamePronto::IO()
 mainRemoveExamePronto = do
+  putStrLn "==============================================="
   ExamePronto.menuRemoverExame 
   voltaAoMenuAnterior mainExamesProntosAdmin msgRetornaAoMenuInicialExamesProntos 
 
 mainListarExamesProntos:: IO()
 mainListarExamesProntos = do
+  putStrLn "==============================================="
   ExamePronto.listarExamesProntos
   voltaAoMenuAnterior mainExamesProntosAdmin msgRetornaAoMenuInicialExamesProntos 
-
-voltaAoMenuAnterior:: IO() -> String -> IO()
-voltaAoMenuAnterior menu mensagem = do
-  putStrLn "==============================================="
-  putStrLn mensagem
-  menu
 
 ---------------------- Menus do modulo de Exames Prontos (Cliente) ------------------
 
@@ -262,21 +277,25 @@ mainMedicosAdmin = do
 
 mainCadastrarMedico:: IO()
 mainCadastrarMedico = do 
+  putStrLn "==============================================="
   Medico.menuAdicionarMedico
   voltaAoMenuAnterior mainMedicosAdmin msgRetornaAoMenuInicialExamesProntos
 
 mainListarMedicos:: IO()
 mainListarMedicos = do
+  putStrLn "==============================================="
   Medico.listaDeMedicos
   voltaAoMenuAnterior mainMedicosAdmin msgRetornaAoMenuInicialExamesProntos 
 
 mainEditarMedico:: IO()
 mainEditarMedico = do
+  putStrLn "==============================================="
   Medico.menuEditarMedico
   voltaAoMenuAnterior mainMedicosAdmin msgRetornaAoMenuInicialExamesProntos
  
 mainRemoverMedico:: IO()
 mainRemoverMedico = do
+  putStrLn "==============================================="
   Medico.menuRemoverMedico
   voltaAoMenuAnterior mainMedicosAdmin msgRetornaAoMenuInicialExamesProntos
 
@@ -290,7 +309,10 @@ mainMedicosCliente = do
 
 mainAvaliacaoAdmin:: IO()
 mainAvaliacaoAdmin = do
+  putStrLn "==============================================="
+  putStrLn "Avaliacoes:"
   Avaliacao.listaDeAvaliacoes
+  putStrLn "==============================================="
   menuPrincipalAdmin
 
 ---------------------- Menus do módulo de Avaliacao (Cliente) ------------------------
@@ -300,7 +322,7 @@ mainAvaliacaoCliente = do
   putStrLn "Nos ajude a melhorar! Deixe sua avaliacao: "
   avaliacao <- getLine
   Avaliacao.escreverAvaliacao avaliacao
-  print "Avaliacao registrada com sucesso. Muito obrigado!"
+  putStrLn "Avaliacao registrada com sucesso. Muito obrigado!"
   menuPrincipalCliente
 
 ------------------- Menus do módulo de Exames (ADMIN) -----------------------------------------
@@ -321,16 +343,19 @@ mainAgendaAdmin = do
 
 mainCadastrarAgenda::IO()
 mainCadastrarAgenda = do
+    putStrLn "==============================================="
     Agenda.menuCadastrarAgenda 
     voltaAoMenuAnterior mainAgendaAdmin msgRetornaAoMenuInicialAgenda
 
 mainEditarAgenda:: IO()
 mainEditarAgenda = do
+    putStrLn "==============================================="
     Agenda.menuEditarAgenda 
     voltaAoMenuAnterior mainAgendaAdmin msgRetornaAoMenuInicialAgenda
 
 mainRemoverAgenda:: IO()
 mainRemoverAgenda = do
+    putStrLn "==============================================="
     Agenda.menuRemoverAgenda  
     voltaAoMenuAnterior mainAgendaAdmin msgRetornaAoMenuInicialAgenda
 
@@ -357,11 +382,13 @@ mainExamesAgendadosAdmin = do
 
 mainConcluirExameAgendado:: IO()
 mainConcluirExameAgendado = do
+  putStrLn "==============================================="
   ExameAgendado.menuConcluirExame
   voltaAoMenuAnterior mainExamesAgendadosAdmin msgRetornaAoMenuInicialExameAgendado
 
 mainCancelarExameAgendado:: IO()
 mainCancelarExameAgendado = do
+  putStrLn "==============================================="
   ExameAgendado.menuCancelarExame
   voltaAoMenuAnterior mainExamesAgendadosAdmin msgRetornaAoMenuInicialExameAgendado
 
