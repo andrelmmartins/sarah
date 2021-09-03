@@ -95,6 +95,14 @@ removerExamePeloNome nome = do
     removeFile "../db/exames.txt" 
     renameFile tempName "../db/exames.txt"
 
+buscarExame :: String -> IO(Bool)
+buscarExame nome = do
+    exames <- readFile "../db/exames.txt"
+    let listaExames = T.splitOn (T.pack "\n") (T.pack exames)
+    let examesEncontrados = [ T.unpack exame | exame <- listaExames, exame /= (T.pack "") && ((T.splitOn (T.pack ", ") (exame)) !! 0) == T.pack nome ]
+    if ((length examesEncontrados) == 0) then return (False)
+    else return (True)
+
 --------------------- Menus de Exames -------------------------
 menuBuscaExamePeloNome:: IO()
 menuBuscaExamePeloNome = do
@@ -106,26 +114,38 @@ menuEditarExamePeloNome:: IO()
 menuEditarExamePeloNome = do
     putStrLn "Informe o nome do exame a ser editado:"
     nome <- getLine
-    putStrLn "Informe o novo nome desse exame:"
-    novoNome <- getLine
-    putStrLn "Informe o novo valor desse exame:"
-    novoValor <- getLine
-    removerExamePeloNome nome
-    addExame novoNome (read novoValor)
-    putStrLn "Exame editado com sucesso."
+    exameExiste <- buscarExame nome
+    if (not exameExiste) then putStrLn "\nEsse Exame nao existe"
+    else do
+        putStrLn "Informe o novo nome desse exame:"
+        novoNome <- getLine
+        novoExameExiste <- buscarExame novoNome
+        if (novoNome /= nome && novoExameExiste) then putStrLn "\nUm Exame ja existe com esse nome"
+        else do
+            putStrLn "Informe o novo valor desse exame:"
+            novoValor <- getLine
+            removerExamePeloNome nome
+            addExame novoNome (read novoValor)
+            putStrLn "Exame editado com sucesso."
 
 menuRemoverExamePeloNome:: IO()
 menuRemoverExamePeloNome = do
     putStrLn "Informe o nome do exame a ser removido:"
     nome <- getLine
-    removerExamePeloNome nome
-    putStrLn "Exame removido com sucesso."
+    exameExiste <- buscarExame nome
+    if (not exameExiste) then putStrLn "\nEsse Exame nao existe"
+    else do
+        removerExamePeloNome nome
+        putStrLn "Exame removido com sucesso."
 
 menuAddExame:: IO()
 menuAddExame = do
     putStrLn "Informe o nome do exame a ser adicionado:"
     nome <- getLine
-    putStrLn "Informe o valor desse exame:"
-    valor <- getLine
-    addExame nome (read valor)
-    print "Exame adicionado com sucesso."
+    exameExiste <- buscarExame nome
+    if (exameExiste) then putStrLn "\nEsse Exame ja existe"
+    else do
+        putStrLn "Informe o valor desse exame:"
+        valor <- getLine
+        addExame nome (read valor)
+        print "Exame adicionado com sucesso."
