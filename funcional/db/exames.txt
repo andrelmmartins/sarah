@@ -1,3 +1,3 @@
-Hemograma, 50.0
 Tgp, 45.0
-exame1, 10.0
+Exame1, 10.0
+Hemograma, 50.0
