@@ -154,7 +154,7 @@ menuVerificarExame = do
     else do
         putStr "Informe a Senha do seu Exame (a senha se encontra abaixo do codigo, no mesmo papel): "
         senhaDada <- getLine
-        if (codificaString (senhaDada) == senha (listaBuscandoCodigo !! 0)) then print (">> Perfeito! Nesse link voce pode confetir o resultado do seu exame: " ++ link (listaBuscandoCodigo !! 0))
+        if (codificaString (senhaDada) == senha (listaBuscandoCodigo !! 0)) then print (">> Perfeito! Nesse link voce pode conferir o resultado do seu exame: " ++ link (listaBuscandoCodigo !! 0))
         else print (">> Desculpe, sua senha nao coincide com a senha informada")
 
 ----------------------------Métodos Úteis---------------------------
