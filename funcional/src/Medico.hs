@@ -7,6 +7,7 @@ import Data.Char
 
 import System.Directory
 import Utils ( unSplit, wordsWhen )
+import qualified Data.Text as T
 
 data Medico = Medico{
     crm :: String, 
@@ -54,6 +55,13 @@ filtraMedicosCrm :: String -> [String] -> Bool
 filtraMedicosCrm _ [] = False
 filtraMedicosCrm crmFiltro (x:xs) = x /= crmFiltro 
 
+buscarMedico :: String -> IO(Bool)
+buscarMedico crmDado = do
+    medicos <- readFile "../db/medicos.txt"
+    let listamedicos = T.splitOn (T.pack "\n") (T.pack medicos)
+    let medicosEncontrados = [ T.unpack medico | medico <- listamedicos, medico /= (T.pack "") && ((T.splitOn (T.pack ",") (medico)) !! 0) == T.pack crmDado ]
+    if ((length medicosEncontrados) == 0) then return (False)
+    else return (True)                                         
 
 listaDeListasToLista :: [[String]] -> [String]
 listaDeListasToLista [] = []
@@ -65,27 +73,36 @@ menuAdicionarMedico:: IO()
 menuAdicionarMedico = do
     putStrLn "Informe o codigo CRM:"
     crm <- getLine
-    putStrLn "Informe o nome completo:"
-    nome <- getLine
-    putStrLn "Informe a especialidade"
-    especialidade <- getLine
-    escreverMedico(adcionaMedico crm nome especialidade)
-    putStrLn "Medico adicionado com sucesso!"
+    existeMedico <- buscarMedico crm
+    if existeMedico then putStrLn "Medico com esse crm ja existe" 
+    else do
+        putStrLn "Informe o nome completo:"
+        nome <- getLine
+        putStrLn "Informe a especialidade"
+        especialidade <- getLine
+        escreverMedico(adcionaMedico crm nome especialidade)
+        putStrLn "Medico adicionado com sucesso!"
 
 menuEditarMedico:: IO()
 menuEditarMedico = do
     putStrLn "Informe o codigo CRM do medico a ser editado:"
     crm <- getLine
-    putStrLn "Informe o nome completo:"
-    nome <- getLine
-    putStrLn "Informe a especialidade:"
-    especialidade <- getLine
-    editaMedicoPorCrm crm nome especialidade
-    putStrLn "Medico editado com sucesso!"
+    existeMedico <- buscarMedico crm
+    if (not existeMedico) then putStrLn "Medico com esse crm nao existe" 
+    else do
+        putStrLn "Informe o nome completo:"
+        nome <- getLine
+        putStrLn "Informe a especialidade:"
+        especialidade <- getLine
+        editaMedicoPorCrm crm nome especialidade
+        putStrLn "Medico editado com sucesso!"
 
 menuRemoverMedico:: IO()
 menuRemoverMedico = do
     putStrLn "Informe o codigo CRM do medico a ser removido:"
     crm <- getLine
-    removeMedicoPorCrm crm
-    putStrLn "Medico removido com sucesso"
+    existeMedico <- buscarMedico crm
+    if (not existeMedico) then putStrLn "Medico com esse crm nao existe" 
+    else do
+        removeMedicoPorCrm crm
+        putStrLn "Medico removido com sucesso"
