@@ -9,7 +9,7 @@ escreverAvaliacao  avaliacao = do
 
 listaDeAvaliacoes ::  IO()
 listaDeAvaliacoes  = do
-    handle <- openFile "../db/medicos.txt" ReadMode  
+    handle <- openFile "../db/avaliacoes.txt" ReadMode  
     contents <- hGetContents handle
     putStr  contents
     hClose handle
