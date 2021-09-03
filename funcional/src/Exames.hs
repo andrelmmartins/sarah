@@ -107,3 +107,4 @@ menuAddExame = do
     valor <- getLine
     addExame nome (read valor)
     print "Exame adicionado com sucesso."
+
