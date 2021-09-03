@@ -20,6 +20,6 @@ Cada visão possui um menu. Sendo a visão do cliente, para o atendimento e dúv
 
 **José Arthur** - 119210204
 
-**José Ítalo** - 119210256
+**José Itallo** - 119210256
 
 **Luiz Bonfim** - 119210966
