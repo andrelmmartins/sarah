@@ -12,6 +12,7 @@ import Utils
 import Constantes
 import Agenda
 import ExameAgendado
+import Home
 
 main:: IO()
 main = do
@@ -60,6 +61,7 @@ menuPrincipalCliente = do
   putStrLn "5. Agendar Visita"
   putStrLn "6. Sugestões, elogios e reclamações"
   putStrLn "7. Agendar Exame"
+  putStrLn "8. Conheca nossa clinica"
   putStrLn "Para voltar ao menu principal, digite qualquer outra tecla."
   putStr "-> "
   selecao <- getLine
@@ -71,6 +73,7 @@ menuPrincipalCliente = do
     "5" -> mainAgendaCliente
     "6" -> mainAvaliacaoCliente
     "7" -> mainAgendarExameCliente
+    "8" -> mainWelcomeMsg
     _ -> voltaAoMenuPrincipal
 
 voltaAoMenuPrincipal:: IO()
@@ -205,7 +208,9 @@ mainListarConvenios = do
 
 mainConveniosCliente:: IO()
 mainConveniosCliente = do
+  putStrLn "==============================================="
   listaConvenios
+  putStrLn "==============================================="
   menuPrincipalCliente
 
 ---------------------- Menus do modulo de Exames Prontos (Admin) ------------------
@@ -254,7 +259,9 @@ mainListarExamesProntos = do
 
 mainExamesProntosCliente :: IO()
 mainExamesProntosCliente = do
-  ExamePronto.menuVerificarExame 
+  putStrLn "==============================================="
+  ExamePronto.menuVerificarExame
+  putStrLn "==============================================="
   menuPrincipalCliente
 
 --------------------------------- Menus do módulo de médicos (ADMIN) --------------------------
@@ -302,7 +309,9 @@ mainRemoverMedico = do
 ---------------------- Menus do módulo de Médicos (Cliente) ------------------------
 mainMedicosCliente:: IO()
 mainMedicosCliente = do
+  putStrLn "==============================================="
   Medico.listaDeMedicos 
+  putStrLn "==============================================="
   menuPrincipalCliente
 
 ---------------------- Menus do módulo de Avaliacao (Admin) ------------------------
@@ -363,7 +372,9 @@ mainRemoverAgenda = do
 
 mainAgendaCliente:: IO()
 mainAgendaCliente = do
-    Agenda.menuAgendarVisita 
+    putStrLn "==============================================="
+    Agenda.menuAgendarVisita
+    putStrLn "==============================================="
     menuPrincipalCliente
 
 ---------------- Menu do módulo de Exame Agendado (Admin) ------------------
@@ -429,5 +440,14 @@ mainListarExamesAgendadosPorDia = do
 
 mainAgendarExameCliente:: IO()
 mainAgendarExameCliente = do
-  ExameAgendado.menuMarcarExame 
+  putStrLn "==============================================="
+  ExameAgendado.menuMarcarExame
+  putStrLn "==============================================="
+  menuPrincipalCliente
+
+mainWelcomeMsg:: IO()
+mainWelcomeMsg = do
+  putStrLn "==============================================="
+  putStrLn Home.welcomeMsg
+  putStrLn "==============================================="
   menuPrincipalCliente
