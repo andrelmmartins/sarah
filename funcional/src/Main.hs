@@ -10,6 +10,8 @@ import Convenios
 import ExamePronto
 import Utils
 import Constantes
+import Agenda
+import ExameAgendado
 
 main:: IO()
 main = do
@@ -33,6 +35,7 @@ menuPrincipalAdmin = do
   putStrLn "4. Exames Prontos"
   putStrLn "5. Agendamentos"
   putStrLn "6. Avaliações"
+  putStrLn "7. Exames Agendados"
   putStrLn "Para voltar ao menu principal, digite qualquer outra tecla."
   putStr "-> "
   selecao <- getLine
@@ -41,8 +44,9 @@ menuPrincipalAdmin = do
     "2" -> mainConveniosAdmin
     "3" -> mainExamesAdmin
     "4" -> mainExamesProntosAdmin
-    -- "5" -> Agendamentos.main
+    "5" -> mainAgendaAdmin
     "6" -> mainAvaliacaoAdmin
+    "7" -> mainExamesAgendadosAdmin
     _ -> voltaAoMenuPrincipal
 
 
@@ -55,6 +59,7 @@ menuPrincipalCliente = do
   putStrLn "4. Buscar Resultados de Exames"
   putStrLn "5. Agendar Visita"
   putStrLn "6. Sugestões, elogios e reclamações"
+  putStrLn "7. Agendar Exame"
   putStrLn "Para voltar ao menu principal, digite qualquer outra tecla."
   putStr "-> "
   selecao <- getLine
@@ -63,14 +68,21 @@ menuPrincipalCliente = do
     "2" -> mainConveniosCliente
     "3" -> mainExamesCliente
     "4" -> mainExamesProntosCliente
-    -- "5" -> Agendamentos.main
+    "5" -> mainAgendaCliente
     "6" -> mainAvaliacaoCliente
+    "7" -> mainAgendarExameCliente
     _ -> voltaAoMenuPrincipal
 
 voltaAoMenuPrincipal:: IO()
 voltaAoMenuPrincipal = do
   putStrLn "Retornando ao menu inicial."
   main
+
+voltaAoMenuAnterior:: IO() -> String -> IO()
+voltaAoMenuAnterior menu mensagem = do
+  putStrLn "==============================================="
+  putStrLn mensagem
+  menu
 
 
 ------------------- Menus do módulo de Exames (ADMIN) -----------------------------------------
@@ -95,26 +107,31 @@ mainExamesAdmin = do
 
 mainListarExames::IO()
 mainListarExames = do
+    putStrLn "==============================================="
     Exames.getAllExames
     voltaAoMenuAnterior mainExamesAdmin msgRetornaAoMenuInicialExames
 
 mainBuscaExamePeloNome:: IO()
 mainBuscaExamePeloNome = do
+    putStrLn "==============================================="
     Exames.menuBuscaExamePeloNome
     voltaAoMenuAnterior mainExamesAdmin msgRetornaAoMenuInicialExames
 
 mainEditarExamePeloNome:: IO()
 mainEditarExamePeloNome = do
+    putStrLn "==============================================="
     Exames.menuEditarExamePeloNome 
     voltaAoMenuAnterior mainExamesAdmin msgRetornaAoMenuInicialExames
 
 mainRemoverExamePeloNome:: IO()
 mainRemoverExamePeloNome = do
+    putStrLn "==============================================="
     Exames.menuRemoverExamePeloNome 
     voltaAoMenuAnterior mainExamesAdmin msgRetornaAoMenuInicialExames
 
 mainAddExame:: IO()
 mainAddExame = do
+    putStrLn "==============================================="
     Exames.menuAddExame 
     voltaAoMenuAnterior mainExamesAdmin msgRetornaAoMenuInicialExames
 
@@ -134,11 +151,13 @@ mainExamesCliente = do
 
 mainListarExamesCliente::IO()
 mainListarExamesCliente = do
+    putStrLn "==============================================="
     Exames.getAllExames
     voltaAoMenuAnterior mainExamesCliente msgRetornaAoMenuInicialExames
 
 mainBuscaExamePeloNomeCliente:: IO()
 mainBuscaExamePeloNomeCliente = do
+    putStrLn "==============================================="
     Exames.menuBuscaExamePeloNome
     voltaAoMenuAnterior mainExamesCliente msgRetornaAoMenuInicialExames
 
@@ -161,38 +180,33 @@ mainConveniosAdmin = do
 
 mainAddConvenios :: IO()
 mainAddConvenios = do
+    putStrLn "==============================================="
     Convenios.menuAdd 
     voltaAoMenuAnterior mainConveniosAdmin msgRetornaAoMenuInicialConvenios
 
 mainRemoverConvenios :: IO()
 mainRemoverConvenios = do
+    putStrLn "==============================================="
     Convenios.menuRemover
     voltaAoMenuAnterior mainConveniosAdmin msgRetornaAoMenuInicialConvenios
 
 mainEditarConvenios :: IO()
 mainEditarConvenios = do
+    putStrLn "==============================================="
     Convenios.menuEditarConvenios
     voltaAoMenuAnterior mainConveniosAdmin msgRetornaAoMenuInicialConvenios
 
 mainListarConvenios:: IO()
 mainListarConvenios = do
+  putStrLn "==============================================="
   listaConvenios
   voltaAoMenuAnterior mainConveniosAdmin msgRetornaAoMenuInicialConvenios
 ---------------------- Menu de Convênios (Cliente) -------------------------------
 
 mainConveniosCliente:: IO()
 mainConveniosCliente = do
-  putStrLn "Ações disponíveis:\n"
-  putStrLn "1 - Listar Convênios Aceitos"
-  putStrLn "Para voltar ao menu anterior, digite qualquer outro valor\n"
-  opcao <- getLine
-  if opcao == "1" then mainListarConveniosParaCliente
-  else menuPrincipalCliente
-
-mainListarConveniosParaCliente:: IO()
-mainListarConveniosParaCliente = do
   listaConvenios
-  voltaAoMenuAnterior mainConveniosCliente msgRetornaAoMenuInicialConvenios
+  menuPrincipalCliente
 
 ---------------------- Menus do modulo de Exames Prontos (Admin) ------------------
 mainExamesProntosAdmin :: IO()
@@ -214,46 +228,34 @@ mainExamesProntosAdmin = do
 
 mainCadastrarExamePronto::IO()
 mainCadastrarExamePronto = do
+  putStrLn "==============================================="
   ExamePronto.menuCadastrarExame
   voltaAoMenuAnterior mainExamesProntosAdmin msgRetornaAoMenuInicialExamesProntos 
 
 mainEditarExamePronto::IO()
 mainEditarExamePronto = do
+  putStrLn "==============================================="
   ExamePronto.menuEditarExamePronto
   voltaAoMenuAnterior mainExamesProntosAdmin msgRetornaAoMenuInicialExamesProntos 
 
 mainRemoveExamePronto::IO()
 mainRemoveExamePronto = do
+  putStrLn "==============================================="
   ExamePronto.menuRemoverExame 
   voltaAoMenuAnterior mainExamesProntosAdmin msgRetornaAoMenuInicialExamesProntos 
 
 mainListarExamesProntos:: IO()
 mainListarExamesProntos = do
+  putStrLn "==============================================="
   ExamePronto.listarExamesProntos
   voltaAoMenuAnterior mainExamesProntosAdmin msgRetornaAoMenuInicialExamesProntos 
-
-voltaAoMenuAnterior:: IO() -> String -> IO()
-voltaAoMenuAnterior menu mensagem = do
-  putStrLn "==============================================="
-  putStrLn mensagem
-  menu
 
 ---------------------- Menus do modulo de Exames Prontos (Cliente) ------------------
 
 mainExamesProntosCliente :: IO()
 mainExamesProntosCliente = do
-    putStrLn "Ações disponíveis:\n"
-    putStrLn "1 - Consultar exame a partir do codigo"
-    putStrLn "Para voltar ao menu anterior, digite qualquer outro valor"
-    putStr "-> "
-    opcao <- getLine
-    if opcao == "1" then mainConsultarExameProntoCliente
-    else menuPrincipalCliente
-
-mainConsultarExameProntoCliente:: IO()
-mainConsultarExameProntoCliente = do
   ExamePronto.menuVerificarExame 
-  voltaAoMenuAnterior mainExamesProntosCliente msgRetornaAoMenuInicialExamesProntos
+  menuPrincipalCliente
 
 --------------------------------- Menus do módulo de médicos (ADMIN) --------------------------
 mainMedicosAdmin :: IO()
@@ -275,44 +277,42 @@ mainMedicosAdmin = do
 
 mainCadastrarMedico:: IO()
 mainCadastrarMedico = do 
+  putStrLn "==============================================="
   Medico.menuAdicionarMedico
   voltaAoMenuAnterior mainMedicosAdmin msgRetornaAoMenuInicialExamesProntos
 
 mainListarMedicos:: IO()
 mainListarMedicos = do
+  putStrLn "==============================================="
   Medico.listaDeMedicos
   voltaAoMenuAnterior mainMedicosAdmin msgRetornaAoMenuInicialExamesProntos 
 
 mainEditarMedico:: IO()
 mainEditarMedico = do
+  putStrLn "==============================================="
   Medico.menuEditarMedico
   voltaAoMenuAnterior mainMedicosAdmin msgRetornaAoMenuInicialExamesProntos
  
 mainRemoverMedico:: IO()
 mainRemoverMedico = do
+  putStrLn "==============================================="
   Medico.menuRemoverMedico
   voltaAoMenuAnterior mainMedicosAdmin msgRetornaAoMenuInicialExamesProntos
 
 ---------------------- Menus do módulo de Médicos (Cliente) ------------------------
 mainMedicosCliente:: IO()
 mainMedicosCliente = do
-  putStrLn "Encontre seu medico aqui:\n"
-  putStrLn "1 - Listar Medicos Disponíveis Aceitos"
-  putStrLn "Para voltar ao menu anterior, digite qualquer outro valor\n"
-  opcao <- getLine
-  if opcao == "1" then mainListarMedicosParaCliente
-  else menuPrincipalCliente
-
-mainListarMedicosParaCliente:: IO()
-mainListarMedicosParaCliente = do
   Medico.listaDeMedicos 
-  voltaAoMenuAnterior mainMedicosCliente msgRetornaAoMenuInicialMedicos
+  menuPrincipalCliente
 
 ---------------------- Menus do módulo de Avaliacao (Admin) ------------------------
 
 mainAvaliacaoAdmin:: IO()
 mainAvaliacaoAdmin = do
+  putStrLn "==============================================="
+  putStrLn "Avaliacoes:"
   Avaliacao.listaDeAvaliacoes
+  putStrLn "==============================================="
   menuPrincipalAdmin
 
 ---------------------- Menus do módulo de Avaliacao (Cliente) ------------------------
@@ -322,5 +322,112 @@ mainAvaliacaoCliente = do
   putStrLn "Nos ajude a melhorar! Deixe sua avaliacao: "
   avaliacao <- getLine
   Avaliacao.escreverAvaliacao avaliacao
-  print "Avaliacao registrada com sucesso. Muito obrigado!"
+  putStrLn "Avaliacao registrada com sucesso. Muito obrigado!"
+  menuPrincipalCliente
+
+------------------- Menus do módulo de Exames (ADMIN) -----------------------------------------
+
+mainAgendaAdmin:: IO()
+mainAgendaAdmin = do
+    putStrLn "Ações disponíveis:\n"
+    putStrLn "1. Cadastrar uma agenda"
+    putStrLn "2. Editar agenda existente"
+    putStrLn "3. Remover agenda"
+    putStrLn "Para voltar ao menu anterior, digite qualquer outro valor"
+    selecao <- getLine
+    case selecao of
+        "1" -> mainCadastrarAgenda
+        "2" -> mainEditarAgenda
+        "3" -> mainRemoverAgenda
+        _ -> menuPrincipalAdmin
+
+mainCadastrarAgenda::IO()
+mainCadastrarAgenda = do
+    putStrLn "==============================================="
+    Agenda.menuCadastrarAgenda 
+    voltaAoMenuAnterior mainAgendaAdmin msgRetornaAoMenuInicialAgenda
+
+mainEditarAgenda:: IO()
+mainEditarAgenda = do
+    putStrLn "==============================================="
+    Agenda.menuEditarAgenda 
+    voltaAoMenuAnterior mainAgendaAdmin msgRetornaAoMenuInicialAgenda
+
+mainRemoverAgenda:: IO()
+mainRemoverAgenda = do
+    putStrLn "==============================================="
+    Agenda.menuRemoverAgenda  
+    voltaAoMenuAnterior mainAgendaAdmin msgRetornaAoMenuInicialAgenda
+
+----------------- Menu do módulo de Exames (Cliente) -----------------------
+
+mainAgendaCliente:: IO()
+mainAgendaCliente = do
+    Agenda.menuAgendarVisita 
+    menuPrincipalCliente
+
+---------------- Menu do módulo de Exame Agendado (Admin) ------------------
+
+mainExamesAgendadosAdmin:: IO()
+mainExamesAgendadosAdmin = do
+    putStrLn "Ações disponíveis:\n"
+    putStrLn "1. Concluir um Exame Agendado"
+    putStrLn "2. Cancelar um Exame Agendado"
+    putStrLn "3. Editar um Exame Agendado"
+    putStrLn "4. Listar Exames Agendados"
+    putStrLn "Para voltar ao menu anterior, digite qualquer outro valor"
+    selecao <- getLine
+    case selecao of
+        "1" -> mainConcluirExameAgendado
+        "2" -> mainCancelarExameAgendado
+        "3" -> mainEditarExameAgendado
+        "4" -> mainListarExamesAgendados
+        _ -> menuPrincipalAdmin
+
+mainConcluirExameAgendado:: IO()
+mainConcluirExameAgendado = do
+  putStrLn "==============================================="
+  ExameAgendado.menuConcluirExame
+  voltaAoMenuAnterior mainExamesAgendadosAdmin msgRetornaAoMenuInicialExameAgendado
+
+mainCancelarExameAgendado:: IO()
+mainCancelarExameAgendado = do
+  putStrLn "==============================================="
+  ExameAgendado.menuCancelarExame
+  voltaAoMenuAnterior mainExamesAgendadosAdmin msgRetornaAoMenuInicialExameAgendado
+
+mainEditarExameAgendado:: IO()
+mainEditarExameAgendado = do
+  putStrLn "==============================================="
+  ExameAgendado.menuEditarExameAgendado
+  voltaAoMenuAnterior mainExamesAgendadosAdmin msgRetornaAoMenuInicialExameAgendado
+
+mainListarExamesAgendados::IO()
+mainListarExamesAgendados = do
+    putStrLn "Refine melhor sua busca:"
+    putStrLn "1. Listar todos os exames agendados"
+    putStrLn "2. Listar exames agendados que estao em aberto"
+    putStrLn "3. Listar exames concluidos"
+    putStrLn "4. Listar exames agendados por dia"
+    putStrLn "Para voltar ao menu anterior, digite qualquer outro valor"
+    selecao <- getLine
+    case selecao of
+        "1" -> ExameAgendado.listarExames
+        "2" -> ExameAgendado.listarExamesEmAberto 
+        "3" -> ExameAgendado.listarExamesConcluidos 
+        "4" -> mainListarExamesAgendadosPorDia
+        _ -> mainExamesAgendadosAdmin
+    voltaAoMenuAnterior mainExamesAgendadosAdmin msgRetornaAoMenuInicialExameAgendado
+
+mainListarExamesAgendadosPorDia::IO()
+mainListarExamesAgendadosPorDia = do
+  putStrLn "Informe a data de busca [dd/mm/yyyy]"
+  dia <- getLine
+  ExameAgendado.listarExamesDia dia
+
+---------------- Menu do módulo de Exame Agendado (Cliente) ------------------
+
+mainAgendarExameCliente:: IO()
+mainAgendarExameCliente = do
+  ExameAgendado.menuMarcarExame 
   menuPrincipalCliente

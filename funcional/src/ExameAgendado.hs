@@ -195,8 +195,8 @@ menuConcluirExame = do
         putStrLn ("Exame de " ++ nomeExame exame ++ " com o Medico " ++ nomeMedico exame ++ " foi concluido!")
 
 -- Menu Editar Agenda
-menuEditarAgenda :: IO()
-menuEditarAgenda = do
+menuEditarExameAgendado :: IO()
+menuEditarExameAgendado = do
     putStr "Informe o ID do Exame que vai ser editado: "
     idExame <- getLine
     exameEncontrado <- buscarExame idExame
