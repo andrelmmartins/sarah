@@ -41,7 +41,7 @@ listarExamesProntos = do
     handle <- openFile "../db/examesProntos.txt" ReadMode  
     conteudo <- hGetContents handle
     let listaQuebrada = T.splitOn (T.pack "\n") (T.pack conteudo)
-    let listaConvertida = [ toExamePronto (T.unpack exame) | exame <- listaQuebrada]
+    let listaConvertida = [ toExamePronto (T.unpack exame) | exame <- listaQuebrada, exame /= (T.pack "")]
     putStr (listaToString listaConvertida)
     hClose handle
 
@@ -99,16 +99,16 @@ menuEditarExamePronto = do
 
         if (codigoDado /= novoCodigo && length listaBuscandoCodigo > 0) then print ">> Ja existe um exame com esse codigo"
         else do
-            putStrLn "Informe a nova senha de acesso do cliente:"
+            putStr "Informe a nova senha de acesso do cliente: "
             novaSenha <- getLine
-            putStrLn "Informe o novo link do resultado:"
+            putStr "Informe o novo link do resultado: "
             novoLink <- getLine
             editarExamePronto codigoDado novoCodigo novaSenha novoLink
             print ">> Exame editado com sucesso."
 
 menuCadastrarExame :: IO()
 menuCadastrarExame = do
-    putStrLn "\nInforme o Codigo do Exame Pronto a ser cadastrado:"
+    putStr "\nInforme o Codigo do Exame Pronto a ser editado: "
     codigoDado <- getLine
 
     examesProntos <- readFile "../db/examesProntos.txt"
@@ -118,16 +118,16 @@ menuCadastrarExame = do
 
     if (length listaBuscandoCodigo > 0) then print ">> Ja existe um resultado com esse codigo"
     else do
-        putStrLn "\nInforme a senha de acesso do cliente:"
+        putStr "\nInforme a senha de acesso do cliente: "
         senha <- getLine
-        putStrLn "\nInforme o link do resultado:"
+        putStr "\nInforme o link do resultado: "
         link <- getLine
         cadastrarExamePronto codigoDado senha link
         print ">> Exame adicionado com sucesso."
 
 menuRemoverExame :: IO()
 menuRemoverExame = do
-    putStrLn "\nInforme o Codigo do Exame Pronto que deve ser removido:"
+    putStr "\nInforme o Codigo do Exame Pronto que deve ser removido: "
     codigoDado <- getLine
 
     examesProntos <- readFile "../db/examesProntos.txt"
@@ -142,7 +142,7 @@ menuRemoverExame = do
 
 menuVerificarExame :: IO()
 menuVerificarExame = do
-    putStrLn "\nInforme o Codigo do seu Exame (o codigo se encontra no verso papel recebido):"
+    putStr "\nInforme o Codigo do seu Exame (o codigo se encontra no verso papel recebido): "
     codigoDado <- getLine
     
     examesProntos <- readFile "../db/examesProntos.txt"
@@ -152,7 +152,7 @@ menuVerificarExame = do
 
     if (length listaBuscandoCodigo == 0) then print ">> Nenhum resultado encontrado com esse codigo"
     else do
-        putStrLn "Informe a Senha do seu Exame (a senha se encontra abaixo do codigo, no mesmo papel):"
+        putStr "Informe a Senha do seu Exame (a senha se encontra abaixo do codigo, no mesmo papel): "
         senhaDada <- getLine
         if (codificaString (senhaDada) == senha (listaBuscandoCodigo !! 0)) then print (">> Perfeito! Nesse link voce pode conferir o resultado do seu exame: " ++ link (listaBuscandoCodigo !! 0))
         else print (">> Desculpe, sua senha nao coincide com a senha informada")

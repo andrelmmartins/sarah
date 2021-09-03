@@ -128,4 +128,4 @@ menuAddExame = do
     putStrLn "Informe o valor desse exame:"
     valor <- getLine
     addExame nome (read valor)
-    putStrLn "Exame adicionado com sucesso!"
+    print "Exame adicionado com sucesso."
