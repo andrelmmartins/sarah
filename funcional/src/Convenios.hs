@@ -51,9 +51,8 @@ menuRemover :: IO()
 menuRemover = do
     putStrLn "CNPJ do convenio a ser removido sem (.) e sem (/):"
     cnpj <- getLine
-    if trimAllBlankSpaces cnpj == ""
-    then
-        putStr "CNPJ invalido!"
+    existeConv <- buscarConvenio cnpj
+    if (not existeConv) then putStr "CNPJ invalido!"
     else
         removeConvenio cnpj
 
@@ -80,11 +79,19 @@ menuEditarConvenios = do
     novoNome <- getLine
     putStrLn "Novo desconto do convenio:"
     desconto <- getLine
-    if trimAllBlankSpaces cnpj == ""
-      then putStr "CNPJ invalido!"
+    existeConv <- buscarConvenio cnpj
+    if (not existeConv) then putStr "CNPJ invalido!"
     else editarConvenio cnpj novoNome (read desconto)
 
 editarConvenio :: String -> String ->Integer -> IO()
 editarConvenio  cnpj nome desconto = do
     removeConvenio cnpj
     escreverConvenio (adicionaConvenio cnpj nome (desconto))
+
+buscarConvenio :: String -> IO(Bool)
+buscarConvenio cnpjDado = do
+     convenios <- readFile "../db/convenios.txt" 
+     let listaConvenios = T.splitOn (T.pack "\n") (T.pack convenios) 
+     let conveniosEncontrados = [ T.unpack convenio | convenio <- listaConvenios, convenio /= (T.pack "") && ((T.splitOn (T.pack ",") (convenio)) !! 0) == T.pack cnpjDado ] 
+     if ((length conveniosEncontrados) == 0) then return (False) 
+     else return (True)
