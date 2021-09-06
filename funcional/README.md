@@ -12,4 +12,3 @@ Após isso, basta chamar a função main da seguinte forma:
 main
 ```
 A partir dai você vai ter acesso as funcionalidades do sistema! 
-.
