@@ -7,9 +7,9 @@ Para executar o programa, navegue ate o diretorio sarah/funcional/src e execute 
 ghci Main.hs
 ```
 
-Após isso, basta chamar a função main e você vai ter acesso as funcionalidades do sistema , que é feito da seguinte forma:
+Após isso, basta chamar a função main da seguinte forma:
 ```
 main
 ```
-
+A partir dai você vai ter acesso as funcionalidades do sistema! 
 .
