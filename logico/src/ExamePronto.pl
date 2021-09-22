@@ -109,6 +109,22 @@ menuEditarExame :-
             editarExamePronto(Codigo, NovoCodigo, Encriptada, NovoLink),
             write('Exame Editado!'))))))).
 
+menuAcessarExame :-
+    (seNaoTemExames -> write('Nao ha Exames Prontos cadastrados para consultar!');
+        (write('\n'),
+        getString(Codigo, 'Digite o Codigo que consta no verso do seu exame: '),
+        buscaExamePronto(Codigo, Encontrado),
+        proper_length(Encontrado, Tamanho),
+        (Tamanho =:= 0 -> writeln('Codigo nao existe no sistema!');
+            nth0(1, Encontrado, EncriptadaCorreta),
+            getString(Senha, 'Digite a Senha de acesso tambem no verso do exame: '),
+            encripta(Senha, Encriptada),
+            atom_number(Encriptada, Number),
+            (Number \= EncriptadaCorreta -> writeln('Senha incorreta!');
+                (nth0(2, Encontrado, Link),
+                string_concat('\nVoce pode encontrar o link do seu exame em: ', Link, Resultado),
+                writeln(Resultado)))))).
+
 %---------------------------- Métodos Extra ---------------------------
 
 toString(List, String) :-
