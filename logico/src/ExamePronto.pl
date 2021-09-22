@@ -40,7 +40,9 @@ removeExamePronto(Codigo) :-
     atom_number(Codigo, Number),
     delete(ExamesProntos, [Number, _, _], ExamesResultantes),
     delete_file('../db/ExamesProntos.csv'),
-    insereExames(ExamesResultantes).
+    open('../db/ExamesProntos.csv', append, File),
+    insereExames(ExamesResultantes),
+    close(File).
 
 insereExames([]).
 insereExames([Exame | Restante]) :-
@@ -67,8 +69,9 @@ menuCadastrarExame :-
         (getString(Senha, 'Digite a Senha que o cliente vai acessar o Resultado: '),
             encripta(Senha, Encriptada),
             getString(Link, 'Digite o Link que o cliente vai ver o Exame: '),
-            cadastraExamePronto(Codigo, Encriptada, Link),
-            write('Exame Cadastrado com sucesso!'))).
+            (re_match('https://', Link) ->  (cadastraExamePronto(Codigo, Encriptada, Link),
+                                            writeln('Exame Cadastrado com sucesso!'));
+            writeln('\nLink Invalido.')))).
 
 menuBuscarExame :-
     (seNaoTemExames -> write('Nao ha Exames Prontos cadastrados para buscar!');
@@ -93,7 +96,7 @@ menuRemoverExame :-
         write('Exame Removido!')))).
 
 menuEditarExame :-
-    (seNaoTemExames -> write('Nao ha Exames Prontos cadastrados para editar!');
+    (seNaoTemExames -> writeln('Nao ha Exames Prontos cadastrados para editar!');
     (write('\n'),
     getString(Codigo, 'Digite o Codigo que vai ser editado: '),
     buscaExamePronto(Codigo, Encontrado),
@@ -106,8 +109,9 @@ menuEditarExame :-
             (getString(NovaSenha, 'Digite a Nova Senha que o cliente vai acessar o Resultado: '), % Pega a nova senha
             encripta(NovaSenha, Encriptada),
             getString(NovoLink, 'Digite o Novo Link onde o cliente vai ver o Exame: '), % Pega o novo link
-            editarExamePronto(Codigo, NovoCodigo, Encriptada, NovoLink),
-            write('Exame Editado!'))))))).
+            (re_match('https://', NovoLink) ->  (editarExamePronto(Codigo, NovoCodigo, Encriptada, NovoLink),
+                                                writeln('\nExame Editado!'));
+            writeln('\nLink Invalido.')))))))).
 
 menuAcessarExame :-
     (seNaoTemExames -> write('Nao ha Exames Prontos cadastrados para consultar!');
