@@ -101,19 +101,19 @@ cancelarVisita(Data, Horario, Resultado) :-
         nth0(3, Encontrada, Horario3),
         nth0(4, Encontrada, Horario4),
         nth0(5, Encontrada, Horario5),
-        ((Horario = "08h as 10h", Horario1 > 0) -> (Reserva is Horario1 - 1,
+        ((Horario = '08h as 10h', Horario1 > 0) -> (Reserva is Horario1 - 1,
                           editarAgenda(Data, Data, Reserva, Horario2, Horario3, Horario4, Horario5),
                           Resultado = true);
-        (Horario = "10h as 12h", Horario2 > 0) -> (Reserva is Horario2 - 1,
+        (Horario = '10h as 12h', Horario2 > 0) -> (Reserva is Horario2 - 1,
                           editarAgenda(Data, Data, Horario1, Reserva, Horario3, Horario4, Horario5),
                           Resultado = true);
-        (Horario = "12h as 14h", Horario3 > 0) -> (Reserva is Horario3 - 1,
+        (Horario = '12h as 14h', Horario3 > 0) -> (Reserva is Horario3 - 1,
                           editarAgenda(Data, Data, Horario1, Horario2, Reserva, Horario4, Horario5),
                           Resultado = true);
-        (Horario = "14h as 16h", Horario4 > 0) -> (Reserva is Horario4 - 1,
+        (Horario = '14h as 16h', Horario4 > 0) -> (Reserva is Horario4 - 1,
                           editarAgenda(Data, Data, Horario1, Horario2, Horario3, Reserva, Horario5),
                           Resultado = true);
-        (Horario = "16h as 18h", Horario5 > 0) -> (Reserva is Horario5 - 1,
+        (Horario = '16h as 18h', Horario5 > 0) -> (Reserva is Horario5 - 1,
                           editarAgenda(Data, Data, Horario1, Horario2, Horario3, Horario4, Reserva),
                           Resultado = true);
         Resultado = false))).
@@ -129,7 +129,7 @@ menuBuscarAgenda :-
 
 menuListarAgendas :-
     (seNaoTemAgendas -> write('Nao ha Agendas cadastradas para listar!');
-    (writeln('\nEsses sao as Agendas no sistema: \n'),
+    (write('\nEsses sao as Agendas no sistema: \n'),
     listarAgendas)).
 
 menuEditarAgenda :-
@@ -159,7 +159,7 @@ menuRemoverAgenda :-
     proper_length(Encontrada, Tamanho),
     (Tamanho =:= 0 -> writeln('Agenda nao existe no sistema!');
         removerAgenda(Data),
-        write('Agenda Removida!')))).
+        writeln('Agenda Removida!')))).
 
 menuCadastrarAgenda :-
     write('\n'),
@@ -176,7 +176,24 @@ menuAgendarVisita :-
     agendarVisita(Data, Horario),
     (Horario = '0' -> writeln('Nao existe mais vaga neste dia!');
     (atomic_list_concat(['\nVoce foi agendado para ', Data, ' as ', Horario, '!'], String),
-    write(String))).
+    writeln(String))).
+
+menuCancelarVisita :-
+    write('\n'),
+    getString(Data, 'Qual a data voce deseja cancelar a visita? [dd/MM/yyyy]: '),
+    buscarAgenda(Data, Encontrada),
+    proper_length(Encontrada, Tamanho),
+    (Tamanho =:= 0 -> writeln('Nao ha agendamento para esta data');
+        (write('\n0 - 08h as 10h\n1 - 10h as 12h\n2 - 12h as 14h\n3 - 14h as 16h\n4 - 16h as 18h'),
+        getString(Numero, '\nDigite o numero do Horario que voce agendou: '),
+        Horarios = ['08h as 10h', '10h as 12h', '12h as 14h', '14h as 16h', '16h as 18h'],
+        atom_number(Numero, Number),
+        ((Number < 0, Number > 5) -> writeln('Numero Invalido');
+            (nth0(Number, Horarios, Horario),
+            cancelarVisita(Data, Horario, Resultado),
+            (Resultado = false -> writeln('\nNao tem nenhum agendamento para este horario!');
+                (atomic_list_concat(['Agendamento para ', Data, ' entre ', Horario, ' foi cancelado!'], String),
+                writeln(String))))))).
 
 %---------------------------- Métodos Extra ---------------------------
 
@@ -187,7 +204,7 @@ toString(List, String) :-
     nth0(3, List, Horario3),
     nth0(4, List, Horario4),
     nth0(5, List, Horario5),
-    Lista = ['---------------------------------- ', Data, ' ----------------------------------\n', '8h as 10h: ', Horario1, ' | 10h as 12h: ', Horario2, ' | 12h as 14h: ', Horario3, ' | 14h as 16h: ', Horario4, ' | 16h as 18h: ', Horario5],
+    Lista = ['\n---------------------------------- ', Data, ' ----------------------------------\n', '08h as 10h: ', Horario1, ' | 10h as 12h: ', Horario2, ' | 12h as 14h: ', Horario3, ' | 14h as 16h: ', Horario4, ' | 16h as 18h: ', Horario5],
     atomic_list_concat(Lista, String).
 
 
