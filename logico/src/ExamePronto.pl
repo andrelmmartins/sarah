@@ -144,4 +144,3 @@ seNaoTemExames:-
     lerCsvRowList('../db/ExamesProntos.csv', ExamesProntos),
     proper_length(ExamesProntos, Tamanho),
     Tamanho =:= 0.
-
