@@ -68,7 +68,7 @@ insereConvenios([]).
 insereConvenios([Convenios | Restante]) :-
     nth0(0,Convenios, Cnpj),
     nth0(1,Convenios, Nome),
-    nth0(1,Convenios, Desconto),
+    nth0(2,Convenios, Desconto),
     cadastrarConvenio(Cnpj,Nome,Desconto),
     insereConvenios(Restante).
 
