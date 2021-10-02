@@ -33,6 +33,34 @@ printaExames([Exame | Restante]) :-
   writeln(String),
   printaExames(Restante).
 
+%---------------------------- Remover Exame Pronto ---------------------------
+
+
+removerConvenio(Cnpj) :-
+  lerCsvRowList('../db/Convenios.csv',Convenios),
+  buscaConvenio(Cnpj,Encontrada),
+  delete(Convenios,Encontrada,ConveniosResultantes),
+  delete_file('../db/Convenios.csv'),
+  open('../db/Convenios.csv',append,File),
+  insereConvenios(ConveniosResultantes),
+  close(File).
+
+removeExame(Nome) :-
+  lerCsvRowList('../db/Exames.csv',Exames),
+  getExame(Nome,ExameEncontrado),
+  delete(Exames,ExameEncontrado,ExamesResultantes),
+  delete_file('../db/Exames.csv'),
+  open('../db/Exames.csv',append,File),
+  insereExames(ExamesResultantes),
+  close(File).
+
+insereExames([]).
+insereExames([Exame | Restante]) :-
+  nth0(0, Exame, Nome),
+  nth0(1, Exame, Preco),
+  cadastraExame(Nome, Preco),
+  insereExames(Restante).
+
 %---------------------------- Menus -----------------------------------------------
 
 menuCadastrarExame :-
@@ -56,6 +84,16 @@ menuListarExames :-
   (seNaoTemExames -> write('Nao ha Exames cadastrados!');
   (writeln('\nEsses sao os Exames cadastrados no sistema: \n'),
   listaExames)).
+
+menuRemoverExame :-
+  (seNaoTemExames -> write('Nao ha Exames cadastrados para remover!');
+  (write('\n'),
+  getString(Nome, 'Digite o Nome do exame que vai ser removido: '),
+  getExame(Nome, Encontrado),
+  proper_length(Encontrado, Tamanho),
+  (Tamanho =:= 0 -> writeln('Exame nao existe no sistema!'); % Verifica se existe o código dado
+      removeExame(Nome),
+      write('Exame Removido!')))).
 
 %---------------------------- Métodos Extra ---------------------------------------
 
