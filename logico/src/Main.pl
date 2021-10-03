@@ -1,5 +1,6 @@
 :-use_module(library(csv)).
 :-include('Exames.pl').
+:-include('Convenio.pl').
 
 main:-
   writeln(' *********** Seja Bem-vindo ao SARAH *********** '),
@@ -26,7 +27,7 @@ menuPrincipalAdmin:-
   getString(Entrada, '-> '),
   (switch(Entrada, [
     "1": writeln('Entrada 1'),
-    "2": writeln('Entrada 2'),
+    "2": mainConveniosAdmin,
     "3": mainExamesAdmin,
     "4": writeln('Entrada 4'),
     "5": writeln('Entrada 5'),
@@ -141,3 +142,49 @@ mainListarExames:-
   writeln('==============================================='),
   writeln('Retornando ao menu do modulo de exames.'),
   mainExamesCliente.
+
+%----------------- Menus do módulo de convênios (ADMIN) ----------------------
+
+mainConveniosAdmin:-
+  writeln('Ações disponíveis:\n'),
+  writeln('1 - Cadastrar Convenio'),
+  writeln('2 - Remover Convenio'),
+  writeln('3 - Editar Convenio'),
+  writeln('4 - Listar Convenios'),
+  writeln('Para voltar ao menu anterior, digite qualquer outro valor\n'),
+  getString(Entrada, '-> '),
+  (switch(Entrada, [
+    "1": mainAddConvenios,
+    "2": mainRemoverConvenios,
+    "3": mainEditarConvenios,
+    "4": mainListarConvenios
+  ]);
+  menuPrincipalAdmin).
+
+mainAddConvenios:-
+  writeln('==============================================='),
+  menuCadastrarConvenio,
+  writeln('==============================================='),
+  writeln('Retornando ao menu inicial do modulo de convenios.'),
+  mainConveniosAdmin.
+
+mainListarConvenios:-
+  writeln('==============================================='),
+  menuListarConvenios,
+  writeln('==============================================='),
+  writeln('Retornando ao menu inicial do modulo de convenios.'),
+  mainConveniosAdmin.
+
+mainEditarConvenios:-
+  writeln('==============================================='),
+  menuEditarConvenio,
+  writeln('==============================================='),
+  writeln('Retornando ao menu inicial do modulo de convenios.'),
+  mainConveniosAdmin.
+
+mainRemoverConvenios:-
+  writeln('==============================================='),
+  menuRemoverConvenio,
+  writeln('==============================================='),
+  writeln('Retornando ao menu inicial do modulo de convenios.'),
+  mainConveniosAdmin.
