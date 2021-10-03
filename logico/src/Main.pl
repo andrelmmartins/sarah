@@ -7,6 +7,7 @@
 :-include('Agenda.pl').
 :-include('Avaliacoes.pl').
 :-include('Home.pl').
+:-include('ExameAgendado.pl').
 
 main:-
   writeln(' *********** Seja Bem-vindo ao SARAH *********** '),
@@ -38,7 +39,7 @@ menuPrincipalAdmin:-
     "4": mainExamesProntosAdmin,
     "5": mainAgendaAdmin,
     "6": mainAvaliacoesAdmin,
-    "7": writeln('Entrada 7')
+    "7": mainExamesAgendadosAdmin
   ]);
   main).
 
@@ -61,7 +62,7 @@ menuPrincipalCliente:-
     "4": mainExamesProntosCliente,
     "5": mainAgendaCliente,
     "6": mainAvaliacoesCliente,
-    "7": writeln('Entrada 7'),
+    "7": mainAgendarExameCliente,
     "8": mainWelcomeSarah
   ]);
   main).
@@ -418,6 +419,98 @@ mainAvaliacoesAdmin:-
 mainAvaliacoesCliente:-
   writeln('==============================================='),
   menuCadastrarAvaliacao,
+  writeln('==============================================='),
+  writeln('Retornando ao menu de principal do Cliente.'),
+  menuPrincipalCliente.
+
+%----------------- Menu do módulo de Exame Agendado (Admin) -----------------------
+
+mainExamesAgendadosAdmin:-
+  writeln('Ações disponíveis:\n'),
+  writeln('1. Concluir um Exame Agendado'),
+  writeln('2. Cancelar um Exame Agendado'),
+  writeln('3. Editar um Exame Agendado'),
+  writeln('4. Listar Exames Agendados'),
+  writeln('Para voltar ao menu anterior, digite qualquer outro valor'),
+  getString(Entrada, '-> '),
+  (switch(Entrada, [
+    "1": mainConcluirExameAgendado,
+    "2": mainCancelarExameAgendado,
+    "3": mainEditarExameAgendado,
+    "4": mainListarExamesAgendados
+  ]);
+  menuPrincipalAdmin).
+
+mainConcluirExameAgendado:-
+  writeln('==============================================='),
+  menuConcluirExame,
+  writeln('==============================================='),
+  writeln('Retornando ao menu do modulo de Exames Agendados.'),
+  mainExamesAgendadosAdmin.
+
+mainCancelarExameAgendado:-
+  writeln('==============================================='),
+  menuCancelarExame,
+  writeln('==============================================='),
+  writeln('Retornando ao menu do modulo de Exames Agendados.'),
+  mainExamesAgendadosAdmin.
+
+mainEditarExameAgendado:-
+  writeln('==============================================='),
+  menuEditarExameAgendado,
+  writeln('==============================================='),
+  writeln('Retornando ao menu do modulo de Exames Agendados.'),
+  mainExamesAgendadosAdmin.
+
+mainListarExamesAgendados:-
+  writeln('Refine melhor sua busca:'),
+  writeln('1. Listar todos os exames agendados'),
+  writeln('2. Listar exames agendados que estao em aberto'),
+  writeln('3. Listar exames concluidos'),
+  writeln('4. Listar exames agendados por dia'),
+  writeln('Para voltar ao menu anterior, digite qualquer outro valor'),
+  getString(Entrada, '-> '),
+  (switch(Entrada, [
+    "1": mainListarTodosExamesAgendados,
+    "2": mainListarExamesAgendadosEmAberto,
+    "3": mainListarExamesAgendadosConcluidos,
+    "4": mainListarExamesAgendadosPorDia
+  ]);
+  mainExamesAgendadosAdmin).
+
+mainListarTodosExamesAgendados:-
+  writeln('==============================================='),
+  menuListarExamesAgendados,
+  writeln('==============================================='),
+  writeln('Retornando ao menu de Listagem de Exames Agendados.'),
+  mainListarExamesAgendados.
+
+mainListarExamesAgendadosEmAberto:-
+  writeln('==============================================='),
+  menuListarExamesEmAberto,
+  writeln('==============================================='),
+  writeln('Retornando ao menu de Listagem de Exames Agendados.'),
+  mainListarExamesAgendados.
+
+mainListarExamesAgendadosConcluidos:-
+  writeln('==============================================='),
+  menuListarExamesConcluidos,
+  writeln('==============================================='),
+  writeln('Retornando ao menu de Listagem de Exames Agendados.'),
+  mainListarExamesAgendados.
+
+mainListarExamesAgendadosPorDia:-
+  writeln('==============================================='),
+  menuListarExamesPelaData,
+  writeln('==============================================='),
+  writeln('Retornando ao menu de Listagem de Exames Agendados.'),
+  mainListarExamesAgendados.
+
+%---------------- Menu do módulo de Exame Agendado (Cliente) ------------------
+
+mainAgendarExameCliente:-
+  writeln('==============================================='),
+  menuMarcarExame,
   writeln('==============================================='),
   writeln('Retornando ao menu de principal do Cliente.'),
   menuPrincipalCliente.
