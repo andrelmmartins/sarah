@@ -5,6 +5,7 @@
 :-include('ExamePronto.pl').
 :-include('Medico.pl').
 :-include('Agenda.pl').
+:-include('Avaliacoes.pl').
 
 main:-
   writeln(' *********** Seja Bem-vindo ao SARAH *********** '),
@@ -35,7 +36,7 @@ menuPrincipalAdmin:-
     "3": mainExamesAdmin,
     "4": mainExamesProntosAdmin,
     "5": mainAgendaAdmin,
-    "6": writeln('Entrada 6'),
+    "6": mainAvaliacoesAdmin,
     "7": writeln('Entrada 7')
   ]);
   main).
@@ -58,7 +59,7 @@ menuPrincipalCliente:-
     "3": mainExamesCliente,
     "4": mainExamesProntosCliente,
     "5": mainAgendaCliente,
-    "6": writeln('Entrada 6'),
+    "6": mainAvaliacoesCliente,
     "7": writeln('Entrada 7'),
     "8": writeln('Entrada 8')
   ]);
@@ -401,3 +402,21 @@ mainCancelarVisitaCliente:-
   writeln('==============================================='),
   writeln('Retornando ao menu de agendamentos.'),
   mainAgendaCliente.
+
+%----------------- Menu do módulo de Avaliações (Admin) -----------------------
+
+mainAvaliacoesAdmin:-
+  writeln('==============================================='),
+  menuListarAvaliacoes,
+  writeln('==============================================='),
+  writeln('Retornando ao menu de principal do Admin.'),
+  menuPrincipalAdmin.
+
+%----------------- Menu do módulo de Avaliações (Cliente) -----------------------
+
+mainAvaliacoesCliente:-
+  writeln('==============================================='),
+  menuCadastrarAvaliacao,
+  writeln('==============================================='),
+  writeln('Retornando ao menu de principal do Cliente.'),
+  menuPrincipalCliente.

@@ -1,5 +1,4 @@
 :-use_module(library(csv)).
-:-include('Util.pl').
 
 cadastrarAvaliacao(Avaliacao) :-
     open('../db/Avaliacoes.csv', append, File),
