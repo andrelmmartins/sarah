@@ -3,6 +3,7 @@
 :-include('Convenio.pl').
 :-include('Util.pl').
 :-include('ExamePronto.pl').
+:-include('Medico.pl').
 
 main:-
   writeln(' *********** Seja Bem-vindo ao SARAH *********** '),
@@ -28,7 +29,7 @@ menuPrincipalAdmin:-
   writeln('Para voltar ao menu principal, digite qualquer outra tecla.'),
   getString(Entrada, '-> '),
   (switch(Entrada, [
-    "1": writeln('Entrada 1'),
+    "1": mainMedicosAdmin,
     "2": mainConveniosAdmin,
     "3": mainExamesAdmin,
     "4": mainExamesProntosAdmin,
@@ -51,7 +52,7 @@ menuPrincipalCliente:-
   writeln('Para voltar ao menu principal, digite qualquer outra tecla.'),
   getString(Entrada, '-> '),
   (switch(Entrada, [
-    "1": writeln('Entrada 1'),
+    "1": mainMedicosCliente,
     "2": mainConveniosCliente,
     "3": mainExamesCliente,
     "4": mainExamesProntosCliente,
@@ -197,7 +198,7 @@ mainConveniosCliente:-
   writeln('==============================================='),
   menuListarConvenios,
   writeln('==============================================='),
-  writeln('Retornando ao menu principal de clientes.'),
+  writeln('Retornando ao menu principal do cliente.'),
   menuPrincipalCliente.
 
 %---------------------- Menus do modulo de Exames Prontos (Admin) ------------------
@@ -207,6 +208,7 @@ mainExamesProntosAdmin:-
   writeln('2 - Editar Exame Pronto'),
   writeln('3 - Remover Exame Pronto'),
   writeln('4 - Listar Exames Prontos'),
+  writeln('5 - Buscar Exame Pronto'),
   writeln('Para voltar ao menu anterior, digite qualquer outro valor'),
   getString(Entrada, '-> '),
   (switch(Entrada, [
@@ -259,5 +261,58 @@ mainExamesProntosCliente:-
   writeln('==============================================='),
   menuAcessarExamePronto,
   writeln('==============================================='),
-  writeln('Retornando ao menu inicial do modulo de exames prontos.'),
+  writeln('Retornando ao menu principal do cliente.'),
+  menuPrincipalCliente.
+
+%--------------------------------- Menus do módulo de médicos (ADMIN) --------------------------
+mainMedicosAdmin:-
+  writeln('Ações disponíveis:\n'),
+  writeln('1 - Cadastrar Medico'),
+  writeln('2 - Edita Medico'),
+  writeln('3 - Remover Medico'),
+  writeln('4 - Listar Medicos'),
+  writeln('Para voltar ao menu anterior, digite qualquer outro valor'),
+  getString(Entrada, '-> '),
+  (switch(Entrada, [
+    "1": mainCadastrarMedico,
+    "2": mainEditarMedico,
+    "3": mainRemoverMedico,
+    "4": mainListarMedicos
+  ]);
+  menuPrincipalAdmin).
+
+mainCadastrarMedico:-
+  writeln('==============================================='),
+  menuCadastrarMedico,
+  writeln('==============================================='),
+  writeln('Retornando ao menu inicial do modulo de medicos.'),
+  mainMedicosAdmin.
+
+mainListarMedicos:-
+  writeln('==============================================='),
+  menuListarMedicos,
+  writeln('==============================================='),
+  writeln('Retornando ao menu inicial do modulo de medicos.'),
+  mainMedicosAdmin. 
+
+mainEditarMedico:-
+  writeln('==============================================='),
+  menuEditarMedico,
+  writeln('==============================================='),
+  writeln('Retornando ao menu inicial do modulo de medicos.'),
+  mainMedicosAdmin.
+ 
+mainRemoverMedico:-
+  writeln('==============================================='),
+  menuRemoverMedico,
+  writeln('==============================================='),
+  writeln('Retornando ao menu inicial do modulo de medicos.'),
+  mainMedicosAdmin.
+
+%---------------------- Menus do módulo de Médicos (Cliente) ------------------------
+mainMedicosCliente:-
+  writeln('==============================================='),
+  menuListarMedicos,
+  writeln('==============================================='),
+  writeln('Retornando ao menu principal do cliente.'),
   menuPrincipalCliente.
