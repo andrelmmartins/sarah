@@ -4,6 +4,7 @@
 :-include('Util.pl').
 :-include('ExamePronto.pl').
 :-include('Medico.pl').
+:-include('Agenda.pl').
 
 main:-
   writeln(' *********** Seja Bem-vindo ao SARAH *********** '),
@@ -33,7 +34,7 @@ menuPrincipalAdmin:-
     "2": mainConveniosAdmin,
     "3": mainExamesAdmin,
     "4": mainExamesProntosAdmin,
-    "5": writeln('Entrada 5'),
+    "5": mainAgendaAdmin,
     "6": writeln('Entrada 6'),
     "7": writeln('Entrada 7')
   ]);
@@ -56,7 +57,7 @@ menuPrincipalCliente:-
     "2": mainConveniosCliente,
     "3": mainExamesCliente,
     "4": mainExamesProntosCliente,
-    "5": writeln('Entrada 5'),
+    "5": mainAgendaCliente,
     "6": writeln('Entrada 6'),
     "7": writeln('Entrada 7'),
     "8": writeln('Entrada 8')
@@ -316,3 +317,87 @@ mainMedicosCliente:-
   writeln('==============================================='),
   writeln('Retornando ao menu principal do cliente.'),
   menuPrincipalCliente.
+
+
+%------------------- Menus do módulo de Agenda (ADMIN) -----------------------------------------
+
+mainAgendaAdmin:-
+  writeln('Ações disponíveis:\n'),
+  writeln('1. Cadastrar uma agenda'),
+  writeln('2. Editar agenda existente'),
+  writeln('3. Remover agenda'),
+  writeln('4. Buscar agenda para uma data'),
+  writeln('5. Listar agendas cadastradas'),
+  writeln('Para voltar ao menu anterior, digite qualquer outro valor'),
+  getString(Entrada, '-> '),
+  (switch(Entrada, [
+    "1": mainCadastrarAgenda,
+    "2": mainEditarAgenda,
+    "3": mainRemoverAgenda,
+    "4": mainBuscarAgenda,
+    "5": mainListarAgenda
+  ]);
+  menuPrincipalAdmin).
+
+mainCadastrarAgenda:-
+  writeln('==============================================='),
+  menuCadastrarAgenda,
+  writeln('==============================================='),
+  writeln('Retornando ao menu inicial do modulo de agenda.'),
+  mainAgendaAdmin.
+
+mainEditarAgenda:-
+  writeln('==============================================='),
+  menuEditarAgenda,
+  writeln('==============================================='),
+  writeln('Retornando ao menu inicial do modulo de agenda.'),
+  mainAgendaAdmin.
+
+mainRemoverAgenda:-
+  writeln('==============================================='),
+  menuRemoverAgenda,
+  writeln('==============================================='),
+  writeln('Retornando ao menu inicial do modulo de agenda.'),
+  mainAgendaAdmin.
+
+mainBuscarAgenda:-
+  writeln('==============================================='),
+  menuBuscarAgenda,
+  writeln('==============================================='),
+  writeln('Retornando ao menu inicial do modulo de agenda.'),
+  mainAgendaAdmin.
+
+mainListarAgenda:-
+  writeln('==============================================='),
+  menuListarAgendas,
+  writeln('==============================================='),
+  writeln('Retornando ao menu inicial do modulo de agenda.'),
+  mainAgendaAdmin.
+
+%----------------- Menu do módulo de Agenda (Cliente) -----------------------
+
+mainAgendaCliente:-
+  writeln('Ações Disponíveis:\n'),
+  writeln('1. Agendar visita'),
+  writeln('2. Cancelar visita'),
+  writeln('Para voltar ao menu anterior, digite qualquer outro valor'),
+  getString(Entrada, '-> '),
+  (switch(Entrada, [
+    "1": mainAgendarVisitaCliente,
+    "2": mainCancelarVisitaCliente
+  ]);
+  menuPrincipalCliente).
+
+mainAgendarVisitaCliente:-
+  writeln('==============================================='),
+  menuAgendarVisita,
+  writeln('==============================================='),
+  writeln('Retornando ao menu de agendamentos.'),
+  mainAgendaCliente.
+
+mainCancelarVisitaCliente:-
+  writeln('==============================================='),
+  menuCancelarVisita,
+  writeln('==============================================='),
+  writeln('Retornando ao menu de agendamentos.'),
+  mainAgendaCliente.

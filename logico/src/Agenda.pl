@@ -1,5 +1,4 @@
 :-use_module(library(csv)).
-:-include('Util.pl').
 
 %---------------------------- Cadastrar uma Agenda -----------------------------------
 
@@ -29,7 +28,7 @@ listarAgendas :-
 
 printaAgenda([]).
 printaAgenda([Agenda | Restante]) :- 
-    toString(Agenda, String),
+    toStringAgenda(Agenda, String),
     writeln(String),
     printaAgenda(Restante).
 
@@ -197,7 +196,7 @@ menuCancelarVisita :-
 
 %---------------------------- Métodos Extra ---------------------------
 
-toString(List, String) :-
+toStringAgenda(List, String) :-
     nth0(0, List, Data),
     nth0(1, List, Horario1),
     nth0(2, List, Horario2),
