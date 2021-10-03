@@ -6,6 +6,7 @@
 :-include('Medico.pl').
 :-include('Agenda.pl').
 :-include('Avaliacoes.pl').
+:-include('Home.pl').
 
 main:-
   writeln(' *********** Seja Bem-vindo ao SARAH *********** '),
@@ -61,7 +62,7 @@ menuPrincipalCliente:-
     "5": mainAgendaCliente,
     "6": mainAvaliacoesCliente,
     "7": writeln('Entrada 7'),
-    "8": writeln('Entrada 8')
+    "8": mainWelcomeSarah
   ]);
   main).
 
@@ -417,6 +418,15 @@ mainAvaliacoesAdmin:-
 mainAvaliacoesCliente:-
   writeln('==============================================='),
   menuCadastrarAvaliacao,
+  writeln('==============================================='),
+  writeln('Retornando ao menu de principal do Cliente.'),
+  menuPrincipalCliente.
+
+%----------------- Conheça nossa Clinica!! -----------------------
+
+mainWelcomeSarah:-
+  writeln('==============================================='),
+  welcomeMsg,
   writeln('==============================================='),
   writeln('Retornando ao menu de principal do Cliente.'),
   menuPrincipalCliente.
