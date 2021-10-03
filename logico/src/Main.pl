@@ -1,6 +1,7 @@
 :-use_module(library(csv)).
 :-include('Exames.pl').
 :-include('Convenio.pl').
+:-include('Util.pl').
 
 main:-
   writeln(' *********** Seja Bem-vindo ao SARAH *********** '),
@@ -62,24 +63,6 @@ menuPrincipalCliente:-
 
 %------------------- Menus do módulo de Exames (ADMIN) -----------------------------------------
 
-mainExamesAdmin:-
-  writeln('Ações disponíveis:\n'),
-  writeln('1. Cadastrar novo Exame'),
-  writeln('2. Buscar um Exame a partir do seu nome'),
-  writeln('3. Listar todos os exames cadastrados'),
-  writeln('4. Editar Exame a partir do seu nome'),
-  writeln('5. Remover um exame a partir do seu nome'),
-  writeln('Para voltar ao menu anterior, digite qualquer outro valor'),
-  getString(Entrada, '-> '),
-  (switch(Entrada, [
-    "1": mainAddExame,
-    "2": mainBuscaExame,
-    "3": mainListarExames,
-    "4": mainEditarExame,
-    "5": mainRemoverExame
-  ]);
-  menuPrincipalAdmin).
-
 mainAddExame:-
   writeln('==============================================='),
   menuCadastrarExame,
@@ -115,6 +98,24 @@ mainRemoverExame:-
   writeln('Retornando ao menu inicial do modulo de exames.'),
   mainExamesAdmin.
 
+mainExamesAdmin:-
+  writeln('Ações disponíveis:\n'),
+  writeln('1. Cadastrar novo Exame'),
+  writeln('2. Buscar um Exame a partir do seu nome'),
+  writeln('3. Listar todos os exames cadastrados'),
+  writeln('4. Editar Exame a partir do seu nome'),
+  writeln('5. Remover um exame a partir do seu nome'),
+  writeln('Para voltar ao menu anterior, digite qualquer outro valor'),
+  getString(Entrada, '-> '),
+  (switch(Entrada, [
+    "1": mainAddExame,
+    "2": mainBuscaExame,
+    "3": mainListarExames,
+    "4": mainEditarExame,
+    "5": mainRemoverExame
+  ]);
+  menuPrincipalAdmin).
+
 %----------------- Menu do módulo de Exames (Cliente) -----------------------
 
 mainExamesCliente:-
@@ -125,18 +126,18 @@ mainExamesCliente:-
   getString(Entrada, '-> '),
   (switch(Entrada, [
     "1": mainListarExamesCliente,
-    "2": mainBuscaExamePeloNomeCliente
+    "2": mainBuscaExameCliente
   ]);
   menuPrincipalCliente).
 
-mainBuscaExame:-
+mainBuscaExameCliente:-
   writeln('==============================================='),
   menuBuscarExame,
   writeln('==============================================='),
   writeln('Retornando ao menu do modulo de exames.'),
   mainExamesCliente.
 
-mainListarExames:-
+mainListarExamesCliente:-
   writeln('==============================================='),
   menuListarExames,
   writeln('==============================================='),

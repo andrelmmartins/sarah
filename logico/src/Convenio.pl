@@ -1,5 +1,4 @@
 :-use_module(library(csv)).
-:-include('Util.pl').
 
 cadastrarConvenio(Cnpj,Nome,Desconto) :-
     open('../db/Convenios.csv', append, File),
