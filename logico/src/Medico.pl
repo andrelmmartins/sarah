@@ -17,16 +17,7 @@ buscaMedicoEmLista(Crm, [Atual | Restante], Encontrado) :-
     (nth0(0, Atual, Number) -> Encontrado = Atual;
     buscaMedicoEmLista(Crm, Restante, Encontrado)).
 
-menuCadastrarMedico :-
-    write('\n'),
-    getString(Crm, 'Crm do medico a ser cadastrado: '),
-    buscaMedico(Crm, Encontrado),
-    proper_length(Encontrado, Tamanho),
-    (Tamanho > 0 -> writeln('Ja existe umm medico com esse crm cadastrado!'); 
-        (getString(Nome, 'Nome do medico: '),
-        getString(Especialidade, 'Especialidade do medico: '),
-        cadastrarMedico(Crm,Nome,Especialidade),
-        writeln('Medico cadastrado!'))).
+
 
 
 listaMedicos :-
@@ -50,11 +41,6 @@ seNaoTemMedicos :-
     proper_length(Medicos, Tamanho),
     Tamanho =:= 0.
 
-menuListarMedicos :-
-    (seNaoTemMedicos -> write('Nao tem nenhum medico cadastrado.');
-    (write('\nEsses são os medicos cadastrados: \n \n'),
-    listaMedicos)).
-
 removerMedico(Crm) :-
     lerCsvRowList('../db/Medicos.csv',Medicos),
     buscaMedico(Crm,Encontrada),
@@ -72,21 +58,29 @@ insereMedicos([Medicos | Restante]) :-
     cadastrarMedico(Crm,Nome,Especialidade),
     insereMedicos(Restante).
 
-menuRemoverMedico :-
-    (seNaoTemMedicos -> write('Nao ha medicos cadastradss para remover!');
-    (write('\n'),
-    getString(Crm, 'Qual o crm do medico que vai ser removido: '),
-    buscaMedico(Crm, Encontrado),
-    proper_length(Encontrado, Tamanho),
-    (Tamanho =:= 0 -> writeln('Medico nao existe no sistema!');
-        removerMedico(Crm),
-        writeln('Medico removido!')))).
-
 editarMedico(Crm,NovoNome,NovaEspecialidade):-
     removerMedico(Crm),
     cadastrarMedico(Crm,NovoNome,NovaEspecialidade).
 
-menuEditarConvenio :-
+menuCadastrarMedico :-
+    write('\n'),
+    getString(Crm, 'Crm do medico a ser cadastrado: '),
+    buscaMedico(Crm, Encontrado),
+    proper_length(Encontrado, Tamanho),
+    (Tamanho > 0 -> writeln('Ja existe umm medico com esse crm cadastrado!'); 
+        (getString(Nome, 'Nome do medico: '),
+        getString(Especialidade, 'Especialidade do medico: '),
+        cadastrarMedico(Crm,Nome,Especialidade),
+        writeln('Medico cadastrado!'))).
+
+
+
+menuListarMedicos :-
+    (seNaoTemMedicos -> write('Nao tem nenhum medico cadastrado.');
+    (write('\nEsses são os medicos cadastrados: \n \n'),
+    listaMedicos)).
+
+menuEditarMedico :-
     (seNaoTemMedicos -> write('Nao tem nenhum medico cadastrado.');
     (write('\n'),
     getString(Crm,'Qual o CRM do medico a ser editado: '),
@@ -96,3 +90,13 @@ menuEditarConvenio :-
         getString(NovoNome,'Qual o novo nome do medico: '),
         getString(NovaEspecialidade,'Qual a nova especialidade do medico: '),
         editarMedico(Crm,NovoNome,NovaEspecialidade)))).
+
+    menuRemoverMedico :-
+        (seNaoTemMedicos -> write('Nao ha medicos cadastradss para remover!');
+        (write('\n'),
+        getString(Crm, 'Qual o crm do medico que vai ser removido: '),
+        buscaMedico(Crm, Encontrado),
+        proper_length(Encontrado, Tamanho),
+        (Tamanho =:= 0 -> writeln('Medico nao existe no sistema!');
+            removerMedico(Crm),
+            writeln('Medico removido!')))).
