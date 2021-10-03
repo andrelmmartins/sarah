@@ -2,6 +2,7 @@
 :-include('Exames.pl').
 :-include('Convenio.pl').
 :-include('Util.pl').
+:-include('ExamePronto.pl').
 
 main:-
   writeln(' *********** Seja Bem-vindo ao SARAH *********** '),
@@ -30,7 +31,7 @@ menuPrincipalAdmin:-
     "1": writeln('Entrada 1'),
     "2": mainConveniosAdmin,
     "3": mainExamesAdmin,
-    "4": writeln('Entrada 4'),
+    "4": mainExamesProntosAdmin,
     "5": writeln('Entrada 5'),
     "6": writeln('Entrada 6'),
     "7": writeln('Entrada 7')
@@ -51,9 +52,9 @@ menuPrincipalCliente:-
   getString(Entrada, '-> '),
   (switch(Entrada, [
     "1": writeln('Entrada 1'),
-    "2": writeln('Entrada 2'),
+    "2": mainConveniosCliente,
     "3": mainExamesCliente,
-    "4": writeln('Entrada 4'),
+    "4": mainExamesProntosCliente,
     "5": writeln('Entrada 5'),
     "6": writeln('Entrada 6'),
     "7": writeln('Entrada 7'),
@@ -189,3 +190,74 @@ mainRemoverConvenios:-
   writeln('==============================================='),
   writeln('Retornando ao menu inicial do modulo de convenios.'),
   mainConveniosAdmin.
+
+%----------------- Menus do módulo de convênios (Cliente) ----------------------
+
+mainConveniosCliente:-
+  writeln('==============================================='),
+  menuListarConvenios,
+  writeln('==============================================='),
+  writeln('Retornando ao menu principal de clientes.'),
+  menuPrincipalCliente.
+
+%---------------------- Menus do modulo de Exames Prontos (Admin) ------------------
+mainExamesProntosAdmin:-
+  writeln('Ações disponíveis:\n'),
+  writeln('1 - Cadastrar Exame Pronto'),
+  writeln('2 - Editar Exame Pronto'),
+  writeln('3 - Remover Exame Pronto'),
+  writeln('4 - Listar Exames Prontos'),
+  writeln('Para voltar ao menu anterior, digite qualquer outro valor'),
+  getString(Entrada, '-> '),
+  (switch(Entrada, [
+    "1": mainCadastrarExamePronto,
+    "2": mainEditarExamePronto,
+    "3": mainRemoveExamePronto,
+    "4": mainListarExamesProntos,
+    "5": mainBuscarExamePronto
+  ]);
+  menuPrincipalAdmin).
+
+mainCadastrarExamePronto:-
+  writeln('==============================================='),
+  menuCadastrarExamePronto,
+  writeln('==============================================='),
+  writeln('Retornando ao menu inicial do modulo de exames prontos.'),
+  mainExamesProntosAdmin.
+
+mainListarExamesProntos:-
+  writeln('==============================================='),
+  menuListarExamesProntos,
+  writeln('==============================================='),
+  writeln('Retornando ao menu inicial do modulo de exames prontos.'),
+  mainExamesProntosAdmin.
+
+mainEditarExamePronto:-
+  writeln('==============================================='),
+  menuEditarExamePronto,
+  writeln('==============================================='),
+  writeln('Retornando ao menu inicial do modulo de exames prontos.'),
+  mainExamesProntosAdmin.
+
+mainRemoveExamePronto:-
+  writeln('==============================================='),
+  menuRemoverExamePronto,
+  writeln('==============================================='),
+  writeln('Retornando ao menu inicial do modulo de exames prontos.'),
+  mainExamesProntosAdmin.
+
+mainBuscarExamePronto:-
+  writeln('==============================================='),
+  menuBuscarExamePronto,
+  writeln('==============================================='),
+  writeln('Retornando ao menu inicial do modulo de exames prontos.'),
+  mainExamesProntosAdmin.
+
+%---------------------- Menus do modulo de Exames Prontos (Cliente) ------------------
+
+mainExamesProntosCliente:-
+  writeln('==============================================='),
+  menuAcessarExamePronto,
+  writeln('==============================================='),
+  writeln('Retornando ao menu inicial do modulo de exames prontos.'),
+  menuPrincipalCliente.
