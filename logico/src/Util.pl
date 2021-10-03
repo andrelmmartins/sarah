@@ -28,3 +28,10 @@ lerCsvRowList(Path,Lists):-
 
 row_to_list(Row, List):-
     Row =.. [row|List].
+
+switch(X, [Val:Goal|Cases]) :-
+    ( X=Val ->
+        call(Goal)
+    ;
+        switch(X, Cases)
+    ).
