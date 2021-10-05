@@ -1,5 +1,4 @@
 :-use_module(library(csv)).
-:-include('Util.pl').
 
 %---------------------------- Cadastrar um Exame Pronto -----------------------------------
 
@@ -29,7 +28,7 @@ listaExamesProntos :-
 
 printaExame([]).
 printaExame([Exame | Restante]) :- 
-    toString(Exame, String),
+    toStringExamePronto(Exame, String),
     writeln(String),
     printaExame(Restante).
 
@@ -41,16 +40,16 @@ removeExamePronto(Codigo) :-
     delete(ExamesProntos, [Number, _, _], ExamesResultantes),
     delete_file('../db/ExamesProntos.csv'),
     open('../db/ExamesProntos.csv', append, File),
-    insereExames(ExamesResultantes),
+    insereExamesProntos(ExamesResultantes),
     close(File).
 
-insereExames([]).
-insereExames([Exame | Restante]) :-
+insereExamesProntos([]).
+insereExamesProntos([Exame | Restante]) :-
     nth0(0, Exame, Codigo),
     nth0(1, Exame, Senha),
     nth0(2, Exame, Link),
     cadastraExamePronto(Codigo, Senha, Link),
-    insereExames(Restante).
+    insereExamesProntos(Restante).
 
 %---------------------------- Editar Exame Pronto ---------------------------
 
@@ -60,7 +59,7 @@ editarExamePronto(Codigo, NovoCodigo, NovaSenha, NovoLink) :-
 
 %---------------------------- Menus ---------------------------
 
-menuCadastrarExame :-
+menuCadastrarExamePronto :-
     write('\n'),
     getString(Codigo, 'Digite o Codigo que vai referenciar o Exame Pronto: '),
     buscaExamePronto(Codigo, Encontrado),
@@ -73,20 +72,20 @@ menuCadastrarExame :-
                                             writeln('Exame Cadastrado com sucesso!'));
             writeln('\nLink Invalido.')))).
 
-menuBuscarExame :-
-    (seNaoTemExames -> write('Nao ha Exames Prontos cadastrados para buscar!');
+menuBuscarExamePronto :-
+    (seNaoTemExamesProntos -> write('Nao ha Exames Prontos cadastrados para buscar!');
     (write('\n'),
     getString(Codigo, 'Digite o Codigo que vamos buscar: '),
     buscaExamePronto(Codigo, Encontrado),
     writeln(Encontrado))).
 
-menuListarExames :-
-    (seNaoTemExames -> write('Nao ha Exames Prontos cadastrados para listar!');
+menuListarExamesProntos :-
+    (seNaoTemExamesProntos -> write('Nao ha Exames Prontos cadastrados para listar!');
     (writeln('\nEsses sao os Exames Prontos cadastrados no sistema: \n'),
     listaExamesProntos)).
 
-menuRemoverExame :-
-    (seNaoTemExames -> write('Nao ha Exames Prontos cadastrados para remover!');
+menuRemoverExamePronto :-
+    (seNaoTemExamesProntos -> write('Nao ha Exames Prontos cadastrados para remover!');
     (write('\n'),
     getString(Codigo, 'Digite o Codigo que vai ser removido: '),
     buscaExamePronto(Codigo, Encontrado),
@@ -95,8 +94,8 @@ menuRemoverExame :-
         removeExamePronto(Codigo),
         write('Exame Removido!')))).
 
-menuEditarExame :-
-    (seNaoTemExames -> writeln('Nao ha Exames Prontos cadastrados para editar!');
+menuEditarExamePronto :-
+    (seNaoTemExamesProntos -> writeln('Nao ha Exames Prontos cadastrados para editar!');
     (write('\n'),
     getString(Codigo, 'Digite o Codigo que vai ser editado: '),
     buscaExamePronto(Codigo, Encontrado),
@@ -113,8 +112,8 @@ menuEditarExame :-
                                                 writeln('\nExame Editado!'));
             writeln('\nLink Invalido.')))))))).
 
-menuAcessarExame :-
-    (seNaoTemExames -> write('Nao ha Exames Prontos cadastrados para consultar!');
+menuAcessarExamePronto :-
+    (seNaoTemExamesProntos -> write('Nao ha Exames Prontos cadastrados para consultar!');
         (write('\n'),
         getString(Codigo, 'Digite o Codigo que consta no verso do seu exame: '),
         buscaExamePronto(Codigo, Encontrado),
@@ -131,7 +130,7 @@ menuAcessarExame :-
 
 %---------------------------- Métodos Extra ---------------------------
 
-toString(List, String) :-
+toStringExamePronto(List, String) :-
     nth0(0, List, Codigo),
     nth0(1, List, Senha),
     nth0(2, List, Link),
@@ -140,7 +139,7 @@ toString(List, String) :-
     string_concat(Y, ' | ', Z),
     string_concat(Z, Link, String).
 
-seNaoTemExames:-
+seNaoTemExamesProntos:-
     lerCsvRowList('../db/ExamesProntos.csv', ExamesProntos),
     proper_length(ExamesProntos, Tamanho),
     Tamanho =:= 0.

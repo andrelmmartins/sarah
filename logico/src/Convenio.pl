@@ -1,5 +1,4 @@
 :-use_module(library(csv)).
-:-include('Util.pl').
 
 cadastrarConvenio(Cnpj,Nome,Desconto) :-
     open('../db/Convenios.csv', append, File),
@@ -35,11 +34,11 @@ listaConvenios :-
 
 printaConvenios([]).
 printaConvenios([Convenios | Restante]) :- 
-    toString(Convenios, String),
+    toStringConvenio(Convenios, String),
     writeln(String),
     printaConvenios(Restante).
 
-toString(List, String) :-
+toStringConvenio(List, String) :-
     nth0(0,List,Cnpj),
     nth0(1,List,Nome),
     nth0(2,List,Desconto),

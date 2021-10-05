@@ -1,5 +1,4 @@
 :-use_module(library(csv)).
-:-include('Util.pl').
 
 cadastrarMedico(Crm,Nome,Especialidade) :-
     open('../db/Medicos.csv', append, File),
@@ -17,20 +16,17 @@ buscaMedicoEmLista(Crm, [Atual | Restante], Encontrado) :-
     (nth0(0, Atual, Number) -> Encontrado = Atual;
     buscaMedicoEmLista(Crm, Restante, Encontrado)).
 
-
-
-
 listaMedicos :-
     lerCsvRowList('../db/Medicos.csv', Medicos),
     printaMedicos(Medicos).
 
 printaMedicos([]).
 printaMedicos([Medico | Restante]) :- 
-    toString(Medico, String),
+    toStringMedico(Medico, String),
     writeln(String),
     printaMedicos(Restante).
 
-toString(List, String) :-
+toStringMedico(List, String) :-
     nth0(0,List,Crm),
     nth0(1,List,Nome),
     nth0(2,List,Especialidade),
@@ -73,8 +69,6 @@ menuCadastrarMedico :-
         cadastrarMedico(Crm,Nome,Especialidade),
         writeln('Medico cadastrado!'))).
 
-
-
 menuListarMedicos :-
     (seNaoTemMedicos -> write('Nao tem nenhum medico cadastrado.');
     (write('\nEsses são os medicos cadastrados: \n \n'),
@@ -91,12 +85,12 @@ menuEditarMedico :-
         getString(NovaEspecialidade,'Qual a nova especialidade do medico: '),
         editarMedico(Crm,NovoNome,NovaEspecialidade)))).
 
-    menuRemoverMedico :-
-        (seNaoTemMedicos -> write('Nao ha medicos cadastradss para remover!');
-        (write('\n'),
-        getString(Crm, 'Qual o crm do medico que vai ser removido: '),
-        buscaMedico(Crm, Encontrado),
-        proper_length(Encontrado, Tamanho),
-        (Tamanho =:= 0 -> writeln('Medico nao existe no sistema!');
-            removerMedico(Crm),
-            writeln('Medico removido!')))).
+menuRemoverMedico :-
+    (seNaoTemMedicos -> write('Nao ha medicos cadastradss para remover!');
+    (write('\n'),
+    getString(Crm, 'Qual o crm do medico que vai ser removido: '),
+    buscaMedico(Crm, Encontrado),
+    proper_length(Encontrado, Tamanho),
+    (Tamanho =:= 0 -> writeln('Medico nao existe no sistema!');
+        removerMedico(Crm),
+        writeln('Medico removido!')))).

@@ -1,5 +1,4 @@
 :-use_module(library(csv)).
-:-consult('ExamePronto.pl').
 
 %---------------------------- Marcar um Exame -----------------------------------
 

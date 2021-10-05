@@ -1,5 +1,4 @@
 :-use_module(library(csv)).
-:-include('Util.pl').
 
 %---------------------------- Cadastrar um Exame -----------------------------------
 
@@ -29,7 +28,7 @@ listaExames :-
 
 printaExames([]).
 printaExames([Exame | Restante]) :- 
-  toString(Exame, String),
+  toStringExames(Exame, String),
   writeln(String),
   printaExames(Restante).
 
@@ -104,7 +103,7 @@ menuEditarExame :-
 
 %---------------------------- Métodos Extra ---------------------------------------
 
-toString(List, String) :-
+toStringExames(List, String) :-
   nth0(0, List, Nome),
   nth0(1, List, Preco),
   string_concat(Nome, ' | ', X),
