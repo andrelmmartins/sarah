@@ -92,7 +92,7 @@ menuRemoverExamePronto :-
     proper_length(Encontrado, Tamanho),
     (Tamanho =:= 0 -> writeln('Codigo nao existe no sistema!'); % Verifica se existe o código dado
         removeExamePronto(Codigo),
-        write('Exame Removido!')))).
+        writeln('Exame Removido!')))).
 
 menuEditarExamePronto :-
     (seNaoTemExamesProntos -> writeln('Nao ha Exames Prontos cadastrados para editar!');

@@ -63,7 +63,7 @@ menuCadastrarMedico :-
     getString(Crm, 'Crm do medico a ser cadastrado: '),
     buscaMedico(Crm, Encontrado),
     proper_length(Encontrado, Tamanho),
-    (Tamanho > 0 -> writeln('Ja existe umm medico com esse crm cadastrado!'); 
+    (Tamanho > 0 -> writeln('Ja existe um medico com esse crm cadastrado!'); 
         (getString(Nome, 'Nome do medico: '),
         getString(Especialidade, 'Especialidade do medico: '),
         cadastrarMedico(Crm,Nome,Especialidade),

@@ -28,5 +28,5 @@ menuCadastrarAvaliacao :-
 
 menuListarAvaliacoes :-
     (seNaoTemAvaliacoes -> write('Nao tem nenhuma avaliacao cadastrada.');
-    (write('\nEsses são as avaliacoes cadastrados: \n \n'),
+    (write('\nEsses sao as avaliacoes cadastrados: \n \n'),
     listaAvaliacoes)).

@@ -88,7 +88,7 @@ menuRemoverExame :-
   proper_length(Encontrado, Tamanho),
   (Tamanho =:= 0 -> writeln('Exame nao existe no sistema!'); % Verifica se existe o código dado
       removeExame(Nome),
-      write('Exame Removido!')))).
+      writeln('Exame Removido!')))).
 
 menuEditarExame :-
   (seNaoTemExames -> write('Nao ha Exames cadastrados.');

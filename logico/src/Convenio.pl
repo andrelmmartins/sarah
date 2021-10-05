@@ -51,7 +51,7 @@ seNaoTemConvenios :-
 
 menuListarConvenios :-
     (seNaoTemConvenios -> write('Nao tem nenhum convenio cadastrado.');
-    (write('\nEsses são os convenios cadastrados: \n \n'),
+    (write('\nEsses sao os convenios cadastrados: \n \n'),
     listaConvenios)).
 
 removerConvenio(Cnpj) :-
@@ -91,7 +91,7 @@ menuEditarConvenio :-
     getString(Cnpj,'Qual o CNPJ do convenio a ser editado: '),
     buscaConvenio(Cnpj,Encontrada),
     proper_length(Encontrada,Tamanho),
-    (Tamanho =:= 0 -> writeln('Convenio não cadastrado no sistema.');
+    (Tamanho =:= 0 -> writeln('Convenio nao cadastrado no sistema.');
         getString(NovoNome,'Qual o novo nome do convenio: '),
         getInt(NovoDesconto,'Qual o novo desconto do convenio em %: '),
         editarConvenio(Cnpj,NovoNome,NovoDesconto)))).

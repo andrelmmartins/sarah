@@ -156,7 +156,7 @@ menuEditarExameAgendado :-
                                 ((IndiceStatus < 0, IndiceStatus >= 2) -> writeln('Esse status nao esta na lista');
                                     nth0(IndiceStatus, ['Concluido', 'Em Aberto'], Status),
                                     editarExameAgendado(ID, CrmMedico, NomeMedico, NomeExame, Data, Hora, Status),
-                                    write('\nExame editado com sucesso! > Codigo: '), write(ID), write(' | '), write(NomeExame), write(' | Medico: '), write(NomeMedico), write(' | '), write(Data), write(' as '), write(Hora), write(' | '), write(Status)))))))))))).
+                                    write('\nExame editado com sucesso! > Codigo: '), write(ID), write(' | '), write(NomeExame), write(' | Medico: '), write(NomeMedico), write(' | '), write(Data), write(' as '), write(Hora), write(' | '), writeln(Status)))))))))))).
 
 menuMarcarExame :-
     lerCsvRowList('../db/Exames.csv', Exames),
