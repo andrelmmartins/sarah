@@ -13,7 +13,7 @@ main:-
   writeln(' *********** Seja Bem-vindo ao SARAH *********** '),
   writeln('1. Admin '),
   writeln('2. Paciente '),
-  writeln('Para encerrar a sessão, digite qualquer outra tecla '),
+  writeln('Para encerrar a sessao, digite qualquer outra tecla '),
   getString(Entrada, '-> '),
   (switch(Entrada, [
     "1": menuPrincipalAdmin,
@@ -22,13 +22,13 @@ main:-
   writeln('Encerrando a sessao. Volte sempre ao SARAH =)'), halt).
   
 menuPrincipalAdmin:-
-  writeln('Olá Admin! Qual módulo deseja acessar ?\n'),
-  writeln('1. Médicos '),
-  writeln('2. Convênios '),
+  writeln('Ola Admin! Qual modulo deseja acessar ?\n'),
+  writeln('1. Medicos '),
+  writeln('2. Convenios '),
   writeln('3. Exames '),
   writeln('4. Exames Prontos '),
   writeln('5. Agendamentos '),
-  writeln('6. Avaliações '),
+  writeln('6. Avaliacoes '),
   writeln('7. Exames Agendados '),
   writeln('Para voltar ao menu principal, digite qualquer outra tecla.'),
   getString(Entrada, '-> '),
@@ -44,14 +44,14 @@ menuPrincipalAdmin:-
   main).
 
 menuPrincipalCliente:-
-  writeln('Olá! Em que a Sarah pode te ajudar hoje ?\n'),
+  writeln('Ola! Em que a Sarah pode te ajudar hoje ?\n'),
   writeln('1. Buscar Medicos'),
   writeln('2. Buscar Convenios'),
   writeln('3. Buscar Exames disponiveis'),
   writeln('4. Buscar Resultados de Exames'),
   writeln('5. Agendar Visita'),
-  writeln('6. Sugestões, elogios e reclamações'),
-  writeln('7. Agendar Exame'),
+  writeln('6. Sugestões, elogios e reclamAcoes'),
+  wiiteln('7. Agendar Exame'),
   writeln('8. Conheca nossa clinica'),
   writeln('Para voltar ao menu principal, digite qualquer outra tecla.'),
   getString(Entrada, '-> '),
@@ -105,7 +105,7 @@ mainRemoverExame:-
   mainExamesAdmin.
 
 mainExamesAdmin:-
-  writeln('Ações disponíveis:\n'),
+  writeln('Acoes disponiveis:\n'),
   writeln('1. Cadastrar novo Exame'),
   writeln('2. Buscar um Exame a partir do seu nome'),
   writeln('3. Listar todos os exames cadastrados'),
@@ -125,7 +125,7 @@ mainExamesAdmin:-
 %----------------- Menu do módulo de Exames (Cliente) -----------------------
 
 mainExamesCliente:-
-  writeln('Ações Disponíveis:\n'),
+  writeln('Acoes Disponiveis:\n'),
   writeln('1. Listar todos os exames cadastrados'),
   writeln('2. Buscar um Exame a partir do seu nome'),
   writeln('Para voltar ao menu anterior, digite qualquer outro valor'),
@@ -153,7 +153,7 @@ mainListarExamesCliente:-
 %----------------- Menus do módulo de convênios (ADMIN) ----------------------
 
 mainConveniosAdmin:-
-  writeln('Ações disponíveis:\n'),
+  writeln('Acoes disponiveis:\n'),
   writeln('1 - Cadastrar Convenio'),
   writeln('2 - Remover Convenio'),
   writeln('3 - Editar Convenio'),
@@ -207,7 +207,7 @@ mainConveniosCliente:-
 
 %---------------------- Menus do modulo de Exames Prontos (Admin) ------------------
 mainExamesProntosAdmin:-
-  writeln('Ações disponíveis:\n'),
+  writeln('Acoes disponiveis:\n'),
   writeln('1 - Cadastrar Exame Pronto'),
   writeln('2 - Editar Exame Pronto'),
   writeln('3 - Remover Exame Pronto'),
@@ -270,7 +270,7 @@ mainExamesProntosCliente:-
 
 %--------------------------------- Menus do módulo de médicos (ADMIN) --------------------------
 mainMedicosAdmin:-
-  writeln('Ações disponíveis:\n'),
+  writeln('Acoes disponiveis:\n'),
   writeln('1 - Cadastrar Medico'),
   writeln('2 - Edita Medico'),
   writeln('3 - Remover Medico'),
@@ -325,7 +325,7 @@ mainMedicosCliente:-
 %------------------- Menus do módulo de Agenda (ADMIN) -----------------------------------------
 
 mainAgendaAdmin:-
-  writeln('Ações disponíveis:\n'),
+  writeln('Acoes disponiveis:\n'),
   writeln('1. Cadastrar uma agenda'),
   writeln('2. Editar agenda existente'),
   writeln('3. Remover agenda'),
@@ -380,7 +380,7 @@ mainListarAgenda:-
 %----------------- Menu do módulo de Agenda (Cliente) -----------------------
 
 mainAgendaCliente:-
-  writeln('Ações Disponíveis:\n'),
+  writeln('Acoes Disponiveis:\n'),
   writeln('1. Agendar visita'),
   writeln('2. Cancelar visita'),
   writeln('Para voltar ao menu anterior, digite qualquer outro valor'),
@@ -405,7 +405,7 @@ mainCancelarVisitaCliente:-
   writeln('Retornando ao menu de agendamentos.'),
   mainAgendaCliente.
 
-%----------------- Menu do módulo de Avaliações (Admin) -----------------------
+%----------------- Menu do módulo de AvaliAcoes (Admini -----------------------
 
 mainAvaliacoesAdmin:-
   writeln('==============================================='),
@@ -414,7 +414,7 @@ mainAvaliacoesAdmin:-
   writeln('Retornando ao menu de principal do Admin.'),
   menuPrincipalAdmin.
 
-%----------------- Menu do módulo de Avaliações (Cliente) -----------------------
+%----------------- Menu do módulo de AvaliAcoes (Clienie) -----------------------
 
 mainAvaliacoesCliente:-
   writeln('==============================================='),
@@ -426,7 +426,7 @@ mainAvaliacoesCliente:-
 %----------------- Menu do módulo de Exame Agendado (Admin) -----------------------
 
 mainExamesAgendadosAdmin:-
-  writeln('Ações disponíveis:\n'),
+  writeln('Acoes disponiveis:\n'),
   writeln('1. Concluir um Exame Agendado'),
   writeln('2. Cancelar um Exame Agendado'),
   writeln('3. Editar um Exame Agendado'),

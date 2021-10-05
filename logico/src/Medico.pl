@@ -71,7 +71,7 @@ menuCadastrarMedico :-
 
 menuListarMedicos :-
     (seNaoTemMedicos -> write('Nao tem nenhum medico cadastrado.');
-    (write('\nEsses são os medicos cadastrados: \n \n'),
+    (write('\nEsses sao os medicos cadastrados: \n \n'),
     listaMedicos)).
 
 menuEditarMedico :-
